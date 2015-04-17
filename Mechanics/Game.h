@@ -48,8 +48,8 @@ class Game {
                 void setRun(bool iRun) { firstrun = iRun; }
 
                 void updateWhip() {
-                        float xPos = player.getPosY();
-                        float yPos = player.getPosX();
+                        float xPos = player.getPosX();
+                        float yPos = player.getPosY();
                         whip.setCenterX(xPos);
                         whip.setCenterY(yPos);
                 }
@@ -66,7 +66,7 @@ class Game {
                 void initFloor() {      //initialize floor
                         floor.setCenterY(0.0f);
                         floor.setCenterX(100.0f);
-                        floor.setWidth(1200.0f);
+                        floor.setWidth(1200.0f);https://github.com/SilentReaper/CS335-Project.git
                         floor.setHeight(100.0f); 
                         floor.setColor(127.0/255.0, 60.0/255.0, 56.0/255.0);
                 }
