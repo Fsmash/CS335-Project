@@ -62,7 +62,6 @@ class Game {
                         whip.setTipX(0);                      //tip that causes hit
                         updateWhip();
                 }
-
                 void initFloor() {      //initialize floor
                         floor.setCenterY(0.0f);
                         floor.setCenterX(100.0f);
