@@ -1,9 +1,13 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 
+#include <fstream>
+#include <iostream>
 #include "../Characters/Player.h"
 #include "../Characters/Ghoul.h"
 #include "../Objects/Whip.h"
+
+using namespace std;
 
 //typedef float Matrix[4][4];       not used for now
 
