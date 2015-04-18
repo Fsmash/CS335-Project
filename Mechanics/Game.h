@@ -1,9 +1,13 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 
+#include <fstream>
+#include <iostream>
 #include "../Characters/Player.h"
 #include "../Characters/Ghoul.h"
 #include "../Objects/Whip.h"
+
+using namespace std;
 
 //typedef float Matrix[4][4];       not used for now
 
@@ -17,7 +21,7 @@ class Game {
                 bool col;               //collision with platform or floor, true of false
 
         public:
-        
+
                 Shape obstacle[4];      //platforms, change to pointer and dynamically allocate memory later
                 Shape floor;            //floor of the scene
                 Whip whip;             //whip weapon, try to move to player class later
@@ -26,7 +30,7 @@ class Game {
                 int nGhouls;            //the number of ghouls in the list
 
                 Players player;          //the player, could possibly be a pointer if we want to implement multiplayer
-                
+
                 Game() {
                         col = false;        //collision flag, fixes multiple jumps
                         firstrun = true;    //first time running game
@@ -128,6 +132,33 @@ class Game {
                         delete node;
                         node = NULL;
                 }
+
+
+                char **getLevel(char lvl, int rows, int cols) {
+
+                        char **array;
+                        array = new char*[rows];
+                        ifstream inFile;
+                        inFile.open(&lvl);
+
+                        for (int r = 0; r < rows; r++)
+                        {
+                                array[r] = new char[cols];
+                                int c = 0;
+                                char ch = inFile.get();
+                                while (ch != '\n')
+                                {
+                                        array[r][c] = ch;
+                                        cout << (char)array[r][c];
+                                        c++;
+                                        ch = inFile.get();
+                                }
+                                cout << endl;
+                        }
+                        return array;    
+                }
+
+
 
 
 };
