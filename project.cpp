@@ -560,35 +560,43 @@ if (keys[XK_space]) {
 
 }
 void render(Game *g)
-{
+{	
+	
+		
+	const int xSize = 12;
+	const int ySize = 20;
+	int blockWidth = 40;
+	int blockHeight = 40;	
 	glClear(GL_COLOR_BUFFER_BIT);
-	char map[10][10] = 
-				   { {'X','X','X','X','X','X','X','X','X','X'},
+	char ** map;
+	map = g->getLevel("lvl1.txt",12,20);
+
+
+/*[ySize][xSize] = 				   { {'X','X','X','X','X','X','X','X','X','X'},
 					 {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
 					 {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
-					 {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
+					 {' ',' ',' ',' ',' ','X',' ',' ',' ',' '},
 					 {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
 					 {' ','X',' ',' ',' ',' ',' ',' ',' ',' '},
+					 {' ',' ',' ',' ','X',' ',' ',' ',' ',' '},
 					 {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
-					 {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
-					 {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
+					 {' ',' ',' ',' ',' ',' ','X',' ',' ',' '},
 					 {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '}
 					};
-	for (int i = 0; i < 10; i++){
-		for(int j = 0; j < 10; j++){
-			if (map[i][j] = 'X'){
+*/	
+	for (int y = 0; y < ySize; y++){
+		for(int x = 0; x < xSize; x++){
+			if (map[y][x] == 'X'){
         		//render square
                	glColor3f(0.0f,1.0f,0.0f);
                	glPushMatrix();
                 //glTranslatef(g->obstacle[i].getCenterX(), g->obstacle[i].getCenterY(), 0.0f);
-                glTranslatef(20*i, yres-20*j, 0.0f);
+                glTranslatef(((2*blockWidth*x)+blockWidth), (yres-(2*blockHeight*y)-blockHeight), 0.0f);
                 glBegin(GL_QUADS);
-                float w1 = 10;
-                float h1 = 10;
-                glVertex2f(-w1, -h1);
-                glVertex2f(-w1, h1);
-                glVertex2f(w1, h1);
-                glVertex2f(w1, -h1);
+                glVertex2f(-blockWidth, -blockHeight);
+                glVertex2f(-blockWidth, blockHeight);
+                glVertex2f(blockWidth, blockHeight);
+                glVertex2f(blockWidth, -blockHeight);
                 glEnd();
                 glColor3f(1.0f, 0.0f, 0.0f);
                 glBegin(GL_POINTS);
@@ -596,9 +604,7 @@ void render(Game *g)
                 glEnd();
                 glPopMatrix();
         	}
-		j++;
 		}
-	i++;
 	}
 }
 
