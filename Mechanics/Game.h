@@ -65,7 +65,7 @@ class Game {
                 void initFloor() {      //initialize floor
                         floor.setCenterY(0.0f);
                         floor.setCenterX(100.0f);
-                        floor.setWidth(1200.0f);https://github.com/SilentReaper/CS335-Project.git
+                        floor.setWidth(1200.0f);    //why was this here? - https://github.com/SilentReaper/CS335-Project.git
                         floor.setHeight(100.0f); 
                         floor.setColor(127.0/255.0, 60.0/255.0, 56.0/255.0);
                 }
