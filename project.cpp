@@ -562,31 +562,20 @@ if (keys[XK_space]) {
 void render(Game *g)
 {	
 	
-		
-	const int xSize = 12;
-	const int ySize = 20;
+	glClear(GL_COLOR_BUFFER_BIT);
+	const int xSize = 20;
+	const int ySize = 12;
 	int blockWidth = 40;
 	int blockHeight = 40;	
-	glClear(GL_COLOR_BUFFER_BIT);
-	char ** map;
-	map = g->getLevel("lvl1.txt",12,20);
+	char **map;
+	char *lvl = "lvl1.txt";
+	map = g->getLevel(lvl,12,20);
 
 
-/*[ySize][xSize] = 				   { {'X','X','X','X','X','X','X','X','X','X'},
-					 {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
-					 {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
-					 {' ',' ',' ',' ',' ','X',' ',' ',' ',' '},
-					 {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
-					 {' ','X',' ',' ',' ',' ',' ',' ',' ',' '},
-					 {' ',' ',' ',' ','X',' ',' ',' ',' ',' '},
-					 {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
-					 {' ',' ',' ',' ',' ',' ','X',' ',' ',' '},
-					 {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '}
-					};
-*/	
+	
 	for (int y = 0; y < ySize; y++){
 		for(int x = 0; x < xSize; x++){
-			if (map[y][x] == 'X'){
+			if (map[y][x] == '#'){
         		//render square
                	glColor3f(0.0f,1.0f,0.0f);
                	glPushMatrix();

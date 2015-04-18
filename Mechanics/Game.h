@@ -134,12 +134,12 @@ class Game {
                 }
 
 
-                char **getLevel(char lvl, int rows, int cols) {
+                char **getLevel(char *lvl, int rows, int cols) {
 
                         char **array;
                         array = new char*[rows];
                         ifstream inFile;
-                        inFile.open(&lvl);
+                        inFile.open(lvl);
 
                         for (int r = 0; r < rows; r++)
                         {
@@ -149,11 +149,11 @@ class Game {
                                 while (ch != '\n')
                                 {
                                         array[r][c] = ch;
-                                        cout << (char)array[r][c];
+                                        //cout << (char)array[r][c];
                                         c++;
                                         ch = inFile.get();
                                 }
-                                cout << endl;
+                                //cout << endl;
                         }
                         return array;    
                 }
