@@ -21,12 +21,13 @@
 #include <X11/keysym.h>
 #include <GL/glx.h>
 #include "Images/ppm.h"
-#include "log.h"
+//#include "log.h"
 #include "Mechanics/Game.h"
+#include <ctype.h>
 
-extern "C" {
+/*extern "C" {
 #include "fonts.h"
-}
+}*/
 //-----------------------------------------------------------------------------
 
 //macros, not used
@@ -100,7 +101,7 @@ void render(Game *game);
 
 int main(void)
 {
-        logOpen();
+        //logOpen();
         initXWindows();
         init_opengl();
         Game game;
@@ -131,8 +132,8 @@ int main(void)
                 glXSwapBuffers(dpy, win);
         }
         cleanupXWindows();
-        cleanup_fonts();
-        logClose();
+        //cleanup_fonts();
+        //logClose();
         return 0;
 }
 
@@ -215,7 +216,7 @@ void init_opengl(void)
         glClearColor(0.0, 0.0, 0.0, 1.0);
         //Do this to allow fonts
         glEnable(GL_TEXTURE_2D);
-        initialize_fonts();
+        //initialize_fonts();
 }
 
 void check_resize(XEvent *e)
@@ -568,17 +569,21 @@ void render(Game *g)
 	int blockWidth = 40;
 	int blockHeight = 40;	
 	char **map;
-	char *lvl = "lvl1.txt";
+	char *lvl = "Levels/lvl1.txt";
 	map = g->getLevel(lvl,12,20);
 
 
 	
 	for (int y = 0; y < ySize; y++){
 		for(int x = 0; x < xSize; x++){
-			if (map[y][x] == '#'){
+			if (!isspace(map[y][x])){
         		//render square
-               	glColor3f(0.0f,1.0f,0.0f);
-               	glPushMatrix();
+               	if (map[y][x] == '#')
+                glColor3f(0.0f,1.0f,0.0f);
+               	else {
+                glColor3f(1.0f,1.0f,0.0f);
+                }
+                glPushMatrix();
                 //glTranslatef(g->obstacle[i].getCenterX(), g->obstacle[i].getCenterY(), 0.0f);
                 glTranslatef(((2*blockWidth*x)+blockWidth), (yres-(2*blockHeight*y)-blockHeight), 0.0f);
                 glBegin(GL_QUADS);
