@@ -1,0 +1,6 @@
+# ignore swp files (from vi/vim)
+*.swp
+# ignore gch files
+*.gch
+# ignore .o/.a files (probably not needed)
+*.[oa]
