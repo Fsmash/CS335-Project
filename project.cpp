@@ -249,7 +249,7 @@ void init(Game *g) {
         g->createGhoul(); 
 
         //create obstacles
-        g->initObstacles();
+        //g->initObstacles();
       
 }
 
@@ -334,7 +334,7 @@ int check_keys(XEvent *e)
 
 void physics(Game *g)
 {	
-        /*=============player physics==============*/	
+/*
         //std::cout<<"[PHYSICS BEG]g->player.pos[0]"<<g->player.pos[0]<<"g->player.pos[1]"<<g->player.pos[1]<<std::endl;
         //player direction
         
@@ -391,10 +391,10 @@ void physics(Game *g)
         float playerPosX = g->player.getPosX();
 
         for (int i = 0; i < 5; i++){
-        float obsY = g->obstacle[i].getCenterY();
-        float obsX = g->obstacle[i].getCenterX();
-        float obsH = g->obstacle[i].getHeight();
-        float obsW = g->obstacle[i].getWidth();
+        //float obsY = g->obstacle[i].getCenterY();
+        //float obsX = g->obstacle[i].getCenterX();
+        //float obsH = g->obstacle[i].getHeight();
+        //float obsW = g->obstacle[i].getWidth();
 
         //top
         if ( (playerPosX > obsX - obsW - playerW + 2 
@@ -468,10 +468,10 @@ while (ghoul){
                                 for (int i = 0; i < 5; i++){
                                 float ghoulPosY = ghoul->getPosY();
                                 float ghoulPosX = ghoul->getPosX();
-                                float obsY = g->obstacle[i].getCenterY();
-                                float obsX = g->obstacle[i].getCenterX();
-                                float obsH = g->obstacle[i].getHeight();
-                                float obsW = g->obstacle[i].getWidth();
+                                //float obsY = g->obstacle[i].getCenterY();
+                                //float obsX = g->obstacle[i].getCenterX();
+                                //float obsH = g->obstacle[i].getHeight();
+                                //float obsW = g->obstacle[i].getWidth();
                                 //std::cout<<"x=" <<g->ghoul->pos[0]<< "y= "<< g->ghoul->pos[1] <<std::endl;
 
 
@@ -558,7 +558,7 @@ if (keys[XK_space]) {
 }
 
 //std::cout<<"[PHYSICS END]g->player.pos[0]"<<g->player.pos[0]<<"g->player.pos[1]"<<g->player.pos[1]<<std::endl;
-
+*/
 }
 void render(Game *g)
 {	

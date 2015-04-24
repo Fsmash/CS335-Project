@@ -12,7 +12,8 @@ class Players : public Character {
         public:
 
                 Vec dir;        //direction of player character on key press. 
-              
+                bool jump;
+                
                 Players() {
                         width = 20.0f;
                         height = 70.0f;
@@ -23,6 +24,10 @@ class Players : public Character {
                         color[1] = 255.0/255.0;
                         color[2] = 235.0/255.0;	
                 }
+
+                void setJump(bool iJump) { jump = iJump; }
+                
+                bool getJump() { return jump; }
 
 };
 

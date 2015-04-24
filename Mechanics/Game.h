@@ -6,6 +6,7 @@
 #include "../Characters/Player.h"
 #include "../Characters/Ghoul.h"
 #include "../Objects/Whip.h"
+#include "../Objects/Block.h"
 
 using namespace std;
 
@@ -22,14 +23,16 @@ class Game {
 
         public:
 
-                Shape obstacle[4];      //platforms, change to pointer and dynamically allocate memory later
+                //Shape obstacle[4];    //platforms, change to pointer and dynamically allocate memory later
                 Shape floor;            //floor of the scene
-                Whip whip;             //whip weapon, try to move to player class later
+                Whip whip;              //whip weapon, try to move to player class later
+                Block *blockHead;       //pointer to begninning of Block linked list
+                int nBlocks;            //the number of blocks in the list
 
-                Ghouls *ghoulHead;       //pointer to beginning of Ghoul linked list
+                Ghouls *ghoulHead;      //pointer to beginning of Ghoul linked list
                 int nGhouls;            //the number of ghouls in the list
 
-                Players player;          //the player, could possibly be a pointer if we want to implement multiplayer
+                Players player;         //the player, could possibly be a pointer if we want to implement multiplayer
 
                 Game() {
                         col = false;        //collision flag, fixes multiple jumps
@@ -66,7 +69,8 @@ class Game {
                         whip.setTipX(0);                      //tip that causes hit
                         updateWhip();
                 }
-                void initFloor() {      //initialize floor
+               
+               void initFloor() {      //initialize floor
                         floor.setCenterY(0.0f);
                         floor.setCenterX(100.0f);
                         floor.setWidth(1200.0f);    //why was this here? - https://github.com/SilentReaper/CS335-Project.git
@@ -74,7 +78,7 @@ class Game {
                         floor.setColor(127.0/255.0, 60.0/255.0, 56.0/255.0);
                 }
 
-                void initObstacles() {
+               /* void initObstacles() {
                         //initialize obstacles, change obstacle to a pointer and dynamically allocate memory for each new platform
                         //obstacle might need to be its own class
                         obstacle[0].setCenterY(120.0f);
@@ -100,7 +104,7 @@ class Game {
                         obstacle[3].setWidth(80.0f);
                         obstacle[3].setHeight(30.0f);
                         obstacle[3].setColor(255.0/255.0, 183.0/255.0, 164.0/255.0);
-                }
+                }*/
 
                 void createGhoul() {
                         Ghouls *gh = new Ghouls;
@@ -157,9 +161,6 @@ class Game {
                         }
                         return array;    
                 }
-
-
-
 
 };
 
