@@ -23,6 +23,11 @@ class Shape {
                 float getWidth() { return width; }
 
                 void setWidth(float iWidth) { width = iWidth; }
+                
+                void setCenter(float x, float y) { 
+                    center.x = x; 
+                    center.y = y; 
+                }
 
                 float getCenterX() { return center.x; }
 

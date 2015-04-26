@@ -8,14 +8,22 @@ using namespace std;
 
 class Block : public Shape {
 
-        public: 
-        
+    public:
+
+        Block *next;
+
+        Block *prev;
+
         bool breakable;
 
         void setBreakable(bool iBreak) { breakable = iBreak; }
 
         bool getBreakable() { return breakable; }
-              
+
+        Block() {
+            next = prev = NULL;
+            width = height = 40;
+        }
 };
 
 

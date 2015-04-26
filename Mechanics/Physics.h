@@ -1,7 +1,10 @@
 #include "Game.h"
+#include <X11/keysym.h>
+int x=1250, y=900;
+
+const float gravity = 0.01f;
 
 void playerFwd(Game *g) {	
-        
         //player determines if player is moving forward
         if(g->player.getVelX() > 0) g->player.setFwd(true);
 
@@ -31,77 +34,125 @@ void playerForces(Game *g) {
         if (g->player.getVelX() + g->player.getPosX() < 4000){
         g->player.setPosX(g->player.getPosX() + g->player.getVelX());	
         }
+        
         g->player.setPosY(g->player.getPosY() + g->player.getVelY());
 
         //reset x velocity 
         g->player.setVelX(0);
 }
 
+void playerCollision(Game *g) {
+    //Check for collision with obstacles
+    float playerW = g->player.getWidth();
+    float playerH = g->player.getHeight();
+    float playerY = g->player.getPosY();
+    float playerX = g->player.getPosX();
+
+    float blockY;
+    float blockX;
+    float blockH;
+    float blockW;
+
+    Block *block = g->blockHead;
+
+    for (int i = 0; i < g->nBlocks; i++) {
+
+        //cout << "peanut butter ice cream diahrrea" << endl;
+        blockY = block->getCenterY();
+        blockX = block->getCenterX();
+        blockH = block->getHeight();
+        blockW = block->getWidth();
+
+        //top
+        if ( (playerX > blockX - blockW - playerW + 2 
+                    && playerX < blockX + blockW + playerW - 2) 
+                && (playerY <= blockY + blockH + playerH) 
+                && (playerY >= (blockY + blockH - 1)) ) {
+            g->player.setVelY(0);
+            g->player.setPosY(blockY + blockH + playerH);
+            g->setCol(true);
+            break;
+        }
+        //left side
+        if ( (playerX > (blockX - blockW - playerW) 
+                    && playerX < blockX) 
+                && (playerY < blockY + blockH)){
+            g->player.setPosX(blockX - blockW - playerW);
+            break;
+        }
+
+        //right side
+        if ( playerX > blockX 
+                && playerX < blockX + blockW + playerW  
+                && (playerY < blockY + blockH )){ 
+            g->player.setPosX(blockX + blockW + playerW);
+            break;
+        }
+        
+        block = block->next;
+    }
+}
+
+void applyKey(Game *g, int *keys) {
+
+    if (g->player.getPosX() < 0) {
+        g->player.setPosX(g->player.getPosX() + (float)x);
+    }
+    else if (g->player.getPosX() > 0 + (float)x) {
+        g->player.setPosX(g->player.getPosX() - (float)x);
+    }
+
+
+    //check keys pressed now`
+    if (keys[XK_Left]) {
+        g->player.setVelX(g->player.getVelX() - 1);
+    }
+    if (keys[XK_Right]) {
+        g->player.setVelX(g->player.getVelX() + 1);
+    }
+
+    if (keys[XK_Up]) {
+        if (!g->player.getJump()){
+            g->player.setVelY(g->player.getVelY() + 2);
+            g->player.setJump(true);
+            g->setCol(false);
+            //std::cout<<"jump colision = false"<<std::endl;
+        }
+    }
+    /*
+    if (keys[XK_space]) {
+        //whip moves to right
+        if(g->player.getFwd()){
+            g->whip.setCenterX(g->whip.getCenterX() + 70);
+            g->whip.setWidth(70);
+            g->whip.setTipX(g->whip.getCenterX() + g->whip.getWidth());
+            //std::cout <<g->whip.tipX<<std::endl;
+            //std::cout<<g->whip.center.x<<std::endl;
+            g->setHit(true);
+        }
+        //whip moves to left
+        if(!g->player.getFwd()){
+            g->whip.setCenterX(g->whip.getCenterX() - 70);
+            g->whip.setWidth(70);
+            g->whip.setTipX(g->whip.getCenterX() - g->whip.getWidth());
+            //std::cout <<g->whip.tipX<<std::endl;
+            //std::cout<<g->whip.center.x<<std::endl;
+            g->setHit(true);
+        }
+    }*/
+}
+
+/*
 void playerUpdateWhip() {
         //update whip position/size with respect to player
         g->updateWhip();
         g->whip.setWidth(0);
-}
+}*/
 
-void playerCollision() {
-        //floor collision
-        if (g->player.getPosY() <= g->block.getCenterY() + g->floor.getHeight() + g->player.getHeight() - 20) {
-        g->player.setVelY(0);
-        g->player.setPosY(g->floor.getCenterY() + g->floor.getHeight() + g->player.getHeight() - 20);
-        g->setCol(true);
-        }
-
-        //Check for collision with obstacles
-        float playerW = g->player.getWidth();
-        float playerH = g->player.getHeight();
-        float playerPosY = g->player.getPosY();
-        float playerPosX = g->player.getPosX();
-
-        for (int i = 0; i < 5; i++){
-        float obsY = g->obstacle[i].getCenterY();
-        float obsX = g->obstacle[i].getCenterX();
-        float obsH = g->obstacle[i].getHeight();
-        float obsW = g->obstacle[i].getWidth();
-
-        //top
-        if ( (playerPosX > obsX - obsW - playerW + 2 
-        && playerPosX < obsX + obsW + playerW - 2) 
-        && (playerPosY <= obsY + obsH + playerH) 
-        && (playerPosY >= (obsY + obsH - 1)) ) {
-        g->player.setVelY(0);
-        g->player.setPosY(obsY + obsH + playerH);
-        g->setCol(true);
-        break;
-}
-//left side
-if ( (playerPosX > (obsX - obsW - playerW) 
-             && playerPosX < obsX) 
-                && (playerPosY < obsY+obsH)){
-        g->player.setPosX(obsX - obsW - playerW);
-        break;
-
-}
-//right side
-if ( playerPosX > obsX 
-                && playerPosX < obsX + obsW + playerW  
-                && (playerPosY < obsY + obsH )){ 
-        g->player.setPosX(obsX + obsW + playerW);
-        break;
-}
-////bottom
-//if ( playerPosY + playerH >= obsY-obsH && 
-//		(playerPosX > obsX-obsW-playerW && playerPosX < obsX+obsW+playerW)  ){
-//	//g->player.vel[1] = -g->player.vel[1];
-//	g->player.pos[1] = obsY-obsH -playerH;
-//	std::cout<<"pPY+pH"<<playerPosY+playerH<<std::endl;
-//	std::cout<<"obsy-obsh"<<obsY-obsH<<std::endl;
-//	std::cout<<"bottom"<<std::endl;
-//	break;
-//}	 
-}
 
 //============ghoul physics ==============
 //ghoul->direction
+/*
 Ghouls *ghoul = g->ghoulHead;
 while(ghoul){	
         if( ghoul->getVelX() > 0){
@@ -186,45 +237,6 @@ if (g->player.getPosX() < 0) {
 }
 else if (g->player.getPosX() > 0 + (float)xres) {
         g->player.setPosX(g->player.getPosX() - (float)xres);
-}
+}*/
 //---------------------------------------------------
-//check keys pressed now`
-if (keys[XK_Left]) {
-        g->player.setVelX(g->player.getVelX() - 4);
-}
-if (keys[XK_Right]) {
-        g->player.setVelX(g->player.getVelX() + 4);
-}
-if (keys[XK_Up]) {
-        if (!jump){
-                g->player.setVelY(g->player.getVelY() + 15);
-                jump = true;
-                g->setCol(false);
-                //std::cout<<"jump colision = false"<<std::endl;
-        }
-}
-if (keys[XK_space]) {
-        //whip moves to right
-        if(g->player.getFwd()){
-                g->whip.setCenterX(g->whip.getCenterX() + 70);
-                g->whip.setWidth(70);
-                g->whip.setTipX(g->whip.getCenterX() + g->whip.getWidth());
-                //std::cout <<g->whip.tipX<<std::endl;
-                //std::cout<<g->whip.center.x<<std::endl;
-                g->setHit(true);
-        }
-        //whip moves to left
-        if(!g->player.getFwd()){
-                g->whip.setCenterX(g->whip.getCenterX() - 70);
-                g->whip.setWidth(70);
-                g->whip.setTipX(g->whip.getCenterX() - g->whip.getWidth());
-                //std::cout <<g->whip.tipX<<std::endl;
-                //std::cout<<g->whip.center.x<<std::endl;
-                g->setHit(true);
-        }
-}
-
-//std::cout<<"[PHYSICS END]g->player.pos[0]"<<g->player.pos[0]<<"g->player.pos[1]"<<g->player.pos[1]<<std::endl;
-
-}
 

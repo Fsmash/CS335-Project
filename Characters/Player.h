@@ -15,8 +15,8 @@ class Players : public Character {
                 bool jump;
                 
                 Players() {
-                        width = 20.0f;
-                        height = 70.0f;
+                        width = 15.0f;
+                        height = 35.0f;
                         forward=true;
                         vel[0] = 0;
                         vel[1] = 0;
