@@ -367,7 +367,7 @@ void render(Game *g)
     glPushMatrix();
     glTranslatef(-g->player.getPosX()+xres/2,-g->player.getPosY()+200, 0.0f);
 
-    for (int i = 0; i < g->nBlocks; i++) {
+     for (int i = 0; i < g->nBlocks; i++) {
 
         glPushMatrix();
         blockX = bh->getCenterX();
@@ -387,7 +387,6 @@ void render(Game *g)
         glPopMatrix();
         bh = bh->next;
     }
-
     float playerW;
     float playerH;
 
