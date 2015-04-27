@@ -2,7 +2,7 @@
 #include <X11/keysym.h>
 int x=1250, y=900;
 
-const float gravity = 0.01f;
+const float gravity = 0.5f;
 
 void playerFwd(Game *g) {	
         //player determines if player is moving forward
@@ -65,7 +65,7 @@ void playerCollision(Game *g) {
 
         //top
         if ( (playerX > blockX - blockW - playerW + 2 
-                    && playerX < blockX + blockW + playerW - 2) 
+                && playerX < blockX + blockW + playerW - 2) 
                 && (playerY <= blockY + blockH + playerH) 
                 && (playerY >= (blockY + blockH - 1)) ) {
             g->player.setVelY(0);
@@ -73,7 +73,7 @@ void playerCollision(Game *g) {
             g->setCol(true);
             break;
         }
-        //left side
+/*        //left side
         if ( (playerX > (blockX - blockW - playerW) 
                     && playerX < blockX) 
                 && (playerY < blockY + blockH)){
@@ -87,7 +87,7 @@ void playerCollision(Game *g) {
                 && (playerY < blockY + blockH )){ 
             g->player.setPosX(blockX + blockW + playerW);
             break;
-        }
+        }*/
         
         block = block->next;
     }
@@ -95,25 +95,25 @@ void playerCollision(Game *g) {
 
 void applyKey(Game *g, int *keys) {
 
-    if (g->player.getPosX() < 0) {
-        g->player.setPosX(g->player.getPosX() + (float)x);
-    }
-    else if (g->player.getPosX() > 0 + (float)x) {
-        g->player.setPosX(g->player.getPosX() - (float)x);
-    }
+//    if (g->player.getPosX() < 0) {
+//        g->player.setPosX(g->player.getPosX() + (float)x);
+//    }
+//    else if (g->player.getPosX() > 0 + (float)x) {
+//        g->player.setPosX(g->player.getPosX() - (float)x);
+//    }
 
 
     //check keys pressed now`
     if (keys[XK_Left]) {
-        g->player.setVelX(g->player.getVelX() - 1);
+        g->player.setVelX(g->player.getVelX() - 4);
     }
     if (keys[XK_Right]) {
-        g->player.setVelX(g->player.getVelX() + 1);
+        g->player.setVelX(g->player.getVelX() + 4);
     }
 
     if (keys[XK_Up]) {
         if (!g->player.getJump()){
-            g->player.setVelY(g->player.getVelY() + 2);
+            g->player.setVelY(g->player.getVelY() + 10);
             g->player.setJump(true);
             g->setCol(false);
             //std::cout<<"jump colision = false"<<std::endl;
