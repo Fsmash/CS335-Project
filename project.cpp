@@ -97,7 +97,6 @@ void init_sounds(void);
 
 void init(Game *g);
 void physics(Game *game);
-void update(Game *game);
 void render(Game *game);
 //-----------------------------------------------------------------------------
 
@@ -107,7 +106,6 @@ int main(void)
     initXWindows();
     init_opengl();
     Game game;
-	update(&game);
     init(&game);
     srand(time(NULL));
     clock_gettime(CLOCK_REALTIME, &timePause);
@@ -208,8 +206,8 @@ void init_opengl(void)
     glMatrixMode(GL_PROJECTION); glLoadIdentity();
     glMatrixMode(GL_MODELVIEW); glLoadIdentity();
     //This sets 2D mode (no perspective)
-//    glOrtho(0, xres, 0, yres, -1, 1);
-//
+    //    glOrtho(0, xres, 0, yres, -1, 1);
+    //
     glDisable(GL_LIGHTING);
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_FOG);
@@ -260,16 +258,18 @@ void init(Game *g) {
     for (int r = 0; r < row; r++){
         for(int c = 0; c < col; c++){
             if (!isspace(map[r][c])){
-                if (map[r][c] == 'S'){ 
+                if (map[r][c] == 'S') 
                     g->player.setPos(((2*40*c)+40), (900-(2*40*r-35))); 
-					b = g->createBlock();
-					b->setCenter(((2*40*c)+40), (900-(2*40*r)-40));  
-				}   
-                if (map[r][c] == '#'){ 
-                    //g->player.setPos(((2*40*c)+40), (900-(2*40*r-35))); 
-					b = g->createBlock();
-					b->setCenter(((2*40*c)+40), (900-(2*40*r)-40));  
-				}   
+                
+                b = g->createBlock();
+                
+                if (c != (col - 1) && !isspace(map[r][c+1])) 
+                    b->setAdjRight(true);
+                
+                if (c != 0 && !isspace(map[r][c-1])) 
+                    b->setAdjLeft(true);
+               
+                b->setCenter(((2*40*c)+40), (900-(2*40*r)-40));  
             }
         }
     }
@@ -339,12 +339,6 @@ int check_keys(XEvent *e)
     return 0;
 }
 
-void update(Game *g)
-{	
-//	gluLookAt(g->player.getPosX(),0.0f,0.0f,
-//			  g->player.getPosX(),0.0f,-1.0f,
-//			  0.0f,1.0f,0.0f);    
-}
 void physics(Game *g)
 {	
 
@@ -359,7 +353,7 @@ void physics(Game *g)
 void render(Game *g)
 {	
     glClear(GL_COLOR_BUFFER_BIT);
-    
+
 
     Block *bh = g->blockHead;
     int blockWidth = bh->getWidth();
@@ -367,17 +361,15 @@ void render(Game *g)
     float blockX;
     float blockY;
 
-        glPushMatrix();
-        glTranslatef(-g->player.getPosX()+xres/2,-g->player.getPosY()+200, 0.0f);
+    glPushMatrix();
+    glTranslatef(-g->player.getPosX()+xres/2,-g->player.getPosY()+200, 0.0f);
 
     for (int i = 0; i < g->nBlocks; i++) {
 
         glPushMatrix();
         blockX = bh->getCenterX();
         blockY = bh->getCenterY();
-
         glColor3f(83.0/255.0,52.0/255.0,178.0/255.0);
-   //     cout << "blockX " << blockX <<" blockY " << blockY << " num " << i << endl;
         glTranslatef(blockX, blockY, 0.0f);
         glBegin(GL_QUADS);
         glVertex2f(-blockWidth, -blockHeight);
@@ -393,7 +385,7 @@ void render(Game *g)
         bh = bh->next;
     }
 
-	float playerW;
+    float playerW;
     float playerH;
 
     //Draw the player
@@ -413,7 +405,7 @@ void render(Game *g)
     glColor3f(1.0f, 0.0f, 0.0f);
     glPopMatrix();
 
-        glPopMatrix();
+    glPopMatrix();
 
     /*  
     //whip

@@ -16,6 +16,18 @@ class Block : public Shape {
 
         bool breakable;
 
+        bool adjRight;
+
+        bool adjLeft;
+
+        void setAdjRight(bool adj) { adjRight = adj; }
+
+        bool getAdjRight() { return adjRight; }
+
+        void setAdjLeft(bool adj) { adjLeft = adj; }
+
+        bool getAdjLeft() { return adjLeft; }
+
         void setBreakable(bool iBreak) { breakable = iBreak; }
 
         bool getBreakable() { return breakable; }
