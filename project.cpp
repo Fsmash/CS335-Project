@@ -206,7 +206,7 @@ void init_opengl(void)
     glMatrixMode(GL_PROJECTION); glLoadIdentity();
     glMatrixMode(GL_MODELVIEW); glLoadIdentity();
     //This sets 2D mode (no perspective)
-    //    glOrtho(0, xres, 0, yres, -1, 1);
+    glOrtho(0, xres, 0, yres, -1, 1);
     //
     glDisable(GL_LIGHTING);
     glDisable(GL_DEPTH_TEST);
@@ -262,7 +262,10 @@ void init(Game *g) {
                     g->player.setPos(((2*40*c)+40), (900-(2*40*r-35))); 
                 
                 b = g->createBlock();
-                
+
+                if (map[r][c] == 'C') 
+                    b->setClimb(true); 
+
                 if (c != (col - 1) && !isspace(map[r][c+1])) 
                     b->setAdjRight(true);
                 

@@ -15,11 +15,17 @@ class Block : public Shape {
         Block *prev;
 
         bool breakable;
+        
+        bool climb;
 
         bool adjRight;
 
         bool adjLeft;
 
+        void setClimb(bool iClimb) { climb = iClimb; }
+
+        bool getClimb() { return climb; }
+       
         void setAdjRight(bool adj) { adjRight = adj; }
 
         bool getAdjRight() { return adjRight; }
@@ -35,6 +41,8 @@ class Block : public Shape {
         Block() {
             next = prev = NULL;
             width = height = 40;
+            climb = false;
+            adjRight = adjLeft = false;
         }
 };
 
