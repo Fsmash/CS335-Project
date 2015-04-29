@@ -5,7 +5,8 @@ LINC = -L ./FMOD/api/lib/x86_64/
 LFLAGS = -lrt -lX11 -lGLU -lGL -pthread -lm $(LINC) -Wl,-rpath=./FMOD/api/lib/x86_64/ -lfmod#-lXrandr
 
 all: project.cpp Images/ppm.c etc/log.c FMOD/fmod.cpp
-	g++ -g $(CFLAGS) project.cpp etc/log.c FMOD/fmod.cpp -Wall -Wextra $(LFLAGS) -o project -w
+	g++ $(CFLAGS) project.cpp etc/log.c FMOD/fmod.cpp Images/ppm.c -Wall -Wextra $(LFLAGS) -o project -w
+
 #all: project.cpp Images/ppm.c etc/log.c
 #	g++ $(CFLAGS) project.cpp etc/log.c -Wall -Wextra $(LFLAGS) -o project -w
 

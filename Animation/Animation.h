@@ -108,6 +108,7 @@ void spriteAnimation(Game *g, int *keys) {
     }
     glEnd();
     glPopMatrix();
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 #endif //_Animation_H_

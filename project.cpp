@@ -25,6 +25,7 @@
 //#include "log.h"
 //#include "Mechanics/Game.h"
 #include "Mechanics/Physics.h"
+#include "Animation/Animation.h"
 #include <ctype.h>
 #include "FMOD/fmod.h"
 
@@ -221,6 +222,36 @@ void init_opengl(void)
     //Do this to allow fonts
     glEnable(GL_TEXTURE_2D);
     //initialize_fonts();
+    simonImage = ppm6GetImage("./Images/simon-belmont-2.ppm");
+    //creating openGl texture elements
+    glGenTextures(1, &simonTexture);
+    glGenTextures(1, &silhouetteTexture);
+    //-------------------------------------------------------------------
+    //Simon
+    //
+    int w = simonImage->width;
+    int h = simonImage->height;
+    //
+    glBindTexture(GL_TEXTURE_2D, simonTexture);
+    //
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0,
+            GL_RGB, GL_UNSIGNED_BYTE, simonImage->data);
+    //-------------------------------------------------------------------
+    //
+    //silhouette
+    //displays sprite to screen 
+    //
+    glBindTexture(GL_TEXTURE_2D, silhouetteTexture);
+    //
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    unsigned char *silhouetteData = buildAlphaData(simonImage);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,
+            GL_RGBA, GL_UNSIGNED_BYTE, silhouetteData);
+    delete [] silhouetteData;
+    //-------------------------------------------------------------------
 }
 
 void check_resize(XEvent *e)
@@ -397,7 +428,8 @@ void render(Game *g)
         glPopMatrix();
         bh = bh->next;
     }
-    float playerW;
+    spriteAnimation(g, keys);
+   /* float playerW;
     float playerH;
 
     //Draw the player
@@ -416,7 +448,7 @@ void render(Game *g)
     glEnd();
     glColor3f(1.0f, 0.0f, 0.0f);
     glPopMatrix();
-
+*/
     glPopMatrix();
 
     /*  
