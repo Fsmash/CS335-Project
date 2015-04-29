@@ -80,7 +80,8 @@ void playerCollision(Game *g) {
                 && (playerY <= (blockY - blockH)) ) {
             g->player.setVelY(0);
             g->player.setPosY(blockY - blockH - playerH);
-            g->setCol(true);
+            if (block->getClimb())
+                g->setCol(true);
         }
         
         //left side

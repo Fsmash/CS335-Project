@@ -27,6 +27,7 @@
 #include "Mechanics/Physics.h"
 #include "Animation/Animation.h"
 #include <ctype.h>
+#include "FMOD/fmod.h"
 
 /*extern "C" {
 #include "fonts.h"
@@ -108,6 +109,7 @@ int main(void)
     init_opengl();
     Game game;
     init(&game);
+    if(!fmod_init()) exit(-1);
     srand(time(NULL));
     clock_gettime(CLOCK_REALTIME, &timePause);
     clock_gettime(CLOCK_REALTIME, &timeStart);
@@ -134,6 +136,7 @@ int main(void)
         glXSwapBuffers(dpy, win);
     }
     cleanupXWindows();
+    fmod_cleanup();
     //cleanup_fonts();
     //logClose();
     return 0;
@@ -293,7 +296,10 @@ void init(Game *g) {
                     g->player.setPos(((2*40*c)+40), (900-(2*40*r-35))); 
                 
                 b = g->createBlock();
-                
+
+                if (map[r][c] == 'C') 
+                    b->setClimb(true); 
+
                 if (c != (col - 1) && !isspace(map[r][c+1])) 
                     b->setAdjRight(true);
                 
@@ -304,6 +310,13 @@ void init(Game *g) {
             }
         }
     }
+
+    // change this if you want, this was here for testing
+    fmod_createsound("./Sounds/The Black Dahlia Murder - Carbonized In Cruciform 8-Bit",BGM);
+    // setting to loop for now (it is bgm atm)
+    fmod_setmode(BGM,FMOD_LOOP_NORMAL);
+    // play sound; bool does nothing atm
+    fmod_playsound(BGM);
 }
 
 void check_mouse(XEvent *e)
@@ -563,4 +576,6 @@ ghoul = ghoul->next;
 }
 
 */
+    // must update often
+    fmod_systemupdate();
 }
