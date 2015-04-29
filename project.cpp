@@ -107,8 +107,8 @@ int main(void)
     initXWindows();
     init_opengl();
     Game game;
+    if(!fmod_init()) return -1;
     init(&game);
-    if(!fmod_init()) exit(-1);
     srand(time(NULL));
     clock_gettime(CLOCK_REALTIME, &timePause);
     clock_gettime(CLOCK_REALTIME, &timeStart);
@@ -281,7 +281,7 @@ void init(Game *g) {
     }
 
     // change this if you want, this was here for testing
-    fmod_createsound("./Sounds/The Black Dahlia Murder - Carbonized In Cruciform 8-Bit",BGM);
+    fmod_createsound("./Sounds/Shape Shifters_Coldly Calculated Design 8-bit.flac",BGM);
     // setting to loop for now (it is bgm atm)
     fmod_setmode(BGM,FMOD_LOOP_NORMAL);
     // play sound; bool does nothing atm
