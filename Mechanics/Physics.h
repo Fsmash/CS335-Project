@@ -57,7 +57,6 @@ void playerCollision(Game *g) {
 
     for (int i = 0; i < g->nBlocks; i++) {
 
-        //cout << "peanut butter ice cream diahrrea" << endl;
         blockY = block->getCenterY();
         blockX = block->getCenterX();
         blockH = block->getHeight();
@@ -99,7 +98,6 @@ void playerCollision(Game *g) {
                 && (playerY < (blockY + blockH ))
                 && (playerY > (blockY - blockH ))
                 && !(block->getAdjRight())) {
-            cout << "block x " << blockX << " y " << blockY << "pushing your shit" << endl;
             g->player.setPosX(blockX + blockW + playerW);
         }
 
