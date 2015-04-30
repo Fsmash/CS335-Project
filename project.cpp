@@ -406,9 +406,15 @@ void render(Game *g)
     float blockY;
 
     glPushMatrix();
-    glTranslatef(-g->player.getPosX()+xres/2,-g->player.getPosY()+200, 0.0f);
+    float dist = -g->player.getPosX()+xres/2;
+    if (dist < 0 || dist > 3960) 
+        glTranslatef(-g->player.getPosX()+xres/2,-g->player.getPosY()+200, 0.0f);
 
-     for (int i = 0; i < g->nBlocks; i++) {
+    else {
+        glTranslatef(0.0,-g->player.getPosY()+200, 0.0f);
+    }
+
+    for (int i = 0; i < g->nBlocks; i++) {
 
         glPushMatrix();
         blockX = bh->getCenterX();
@@ -429,8 +435,8 @@ void render(Game *g)
         bh = bh->next;
     }
     spriteAnimation(g, keys);
-   /* float playerW;
-    float playerH;
+    /* float playerW;
+       float playerH;
 
     //Draw the player
     glColor3fv(g->player.getColor());

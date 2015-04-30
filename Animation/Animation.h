@@ -86,7 +86,7 @@ void spriteAnimation(Game *g, int *keys)
     //Draw the player
     //glColor3fv(g->player.getColor());
     glPushMatrix();
-    //std::cout<<"g->player.pos[0]"<<g->player.pos[0]<<"g->player.pos[1]"<<g-    >player.pos[1]<<std::endl;
+    std::cout<<"g->player.pos[0]"<<g->player.getPosX()<<"g->player.pos[1]"<<g->player.getPosY()<<std::endl;
 
     glTranslatef(g->player.getPosX(), g->player.getPosY(), 0.0f);
     if (!silhouette) {
