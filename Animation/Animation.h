@@ -11,6 +11,29 @@ GLuint simonTexture;
 GLuint silhouetteTexture;
 int show_simon = 0;
 int silhouette = 1;
+
+
+void setColorBlack(Ppmimage *img) 
+{
+    int a, b , c;
+    int w = img->width;
+    int h = img->height;
+    unsigned char *p, *ptr = (unsigned char *)img->data;
+    p = ptr;
+    for (int i=0; i<h; i++) {
+        for (int j=0; j<w; j++) {
+            a = *(p+0);
+            b = *(p+1);
+            c = *(p+2);
+            if(a == 128 && b == 0 && c == 0) {
+                *(p+0) = 0;
+                *(p+1) = 0;
+                *(p+2) = 0;
+            }
+            p+=3;
+        }
+    }    
+}
 //-----------------------------------------------------------------------------
 //Build data to display sprite through texture 
 unsigned char *buildAlphaData(Ppmimage *img)
@@ -54,7 +77,8 @@ unsigned char *buildAlphaData(Ppmimage *img)
 //--------------------------------------------------------------------------
 //Function to organize sprite mapping and animations
 
-void spriteAnimation(Game *g, int *keys) {
+void spriteAnimation(Game *g, int *keys) 
+{
 //float playerW;
     //float playerH;
     float wid = 60.0f;
@@ -88,11 +112,17 @@ void spriteAnimation(Game *g, int *keys) {
         glTexCoord2f(0.0f, 0.0f); glVertex2f(wid, wid);
         glTexCoord2f(0.0f, 0.055f); glVertex2f(wid, -wid);
     } else if (keys[XK_Down]) {
-        glTexCoord2f(0.055f, 0.055f); glVertex2f(-wid, -wid);
-        glTexCoord2f(0.055f, 0.0f); glVertex2f(-wid, wid);
-        glTexCoord2f(0.11f, 0.0f); glVertex2f(wid, wid);
-        glTexCoord2f(0.11f, 0.055f); glVertex2f(wid, -wid);
-        g->player.setVel(0,0);
+        if(g->player.getFwd()) {
+            glTexCoord2f(0.055f, 0.055f); glVertex2f(-wid, -wid);
+            glTexCoord2f(0.055f, 0.0f); glVertex2f(-wid, wid);
+            glTexCoord2f(0.11f, 0.0f); glVertex2f(wid, wid);
+            glTexCoord2f(0.11f, 0.055f); glVertex2f(wid, -wid);
+        } else {
+            glTexCoord2f(0.11f, 0.055f); glVertex2f(-wid, -wid);
+            glTexCoord2f(0.11f, 0.0f); glVertex2f(-wid, wid);
+            glTexCoord2f(0.055f, 0.0f); glVertex2f(wid, wid);
+            glTexCoord2f(0.055f, 0.055f); glVertex2f(wid, -wid);
+        }
     } else {
         if(g->player.getFwd()) {
             glTexCoord2f(0.0f, 0.055f); glVertex2f(-wid, -wid);
