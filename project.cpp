@@ -135,6 +135,9 @@ int main(void)
         render(&game);
         game.setRun(false);
         glXSwapBuffers(dpy, win);
+
+        // must update fmod often
+        fmod_systemupdate();
     }
     cleanupXWindows();
     fmod_cleanup();
@@ -355,14 +358,19 @@ int check_keys(XEvent *e)
     //Log("key: %i\n", key);
     if (e->type == KeyRelease) {
         keys[key]=0;
-        if (key == XK_Shift_L || key == XK_Shift_R)
+        if (key == XK_Shift_L || key == XK_Shift_R) {
+            // release shift (unused?) and dash
             shift=0;
+            dash=0;
+        }
         return 0;
     }
-    if (e->type == KeyPress) {
+    else if (e->type == KeyPress) {
         keys[key]=1;
         if (key == XK_Shift_L || key == XK_Shift_R) {
+            // set shift (unused?) and dash
             shift=1;
+            dash=1;
             return 0;
         }
     } else {
@@ -585,6 +593,4 @@ ghoul = ghoul->next;
 }
 
 */
-    // must update often
-    fmod_systemupdate();
 }

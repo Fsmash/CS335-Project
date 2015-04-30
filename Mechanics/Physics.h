@@ -2,6 +2,9 @@
 #include <X11/keysym.h>
 int x=1250, y=900;
 
+// this allows for dashing, if you couldnt figure it out
+extern int dash = 0;
+
 const float gravity = 0.5f;
 
 void playerFwd(Game *g) {	
@@ -57,6 +60,7 @@ void playerCollision(Game *g) {
 
     for (int i = 0; i < g->nBlocks; i++) {
 
+        //cout << "peanut butter ice cream diahrrea" << endl;
         blockY = block->getCenterY();
         blockX = block->getCenterX();
         blockH = block->getHeight();
@@ -98,6 +102,7 @@ void playerCollision(Game *g) {
                 && (playerY < (blockY + blockH ))
                 && (playerY > (blockY - blockH ))
                 && !(block->getAdjRight())) {
+            cout << "block x " << blockX << " y " << blockY << "pushing your shit" << endl;
             g->player.setPosX(blockX + blockW + playerW);
         }
 
@@ -117,15 +122,24 @@ void applyKey(Game *g, int *keys) {
 
     //check keys pressed now`
     if (keys[XK_Left]) {
-        g->player.setVelX(g->player.getVelX() - 4);
+        if(dash)
+            g->player.setVelX(g->player.getVelX() - 12);
+        else
+            g->player.setVelX(g->player.getVelX() - 4);
     }
     if (keys[XK_Right]) {
-        g->player.setVelX(g->player.getVelX() + 4);
+        if(dash)
+            g->player.setVelX(g->player.getVelX() + 12);
+        else
+            g->player.setVelX(g->player.getVelX() + 4);
     }
 
     if (keys[XK_Up]) {
-        if (!g->player.getJump()){
-            g->player.setVelY(g->player.getVelY() + 10);
+        if (!g->player.getJump()) {
+            if(dash)
+                g->player.setVelY(g->player.getVelY() + 18);
+            else
+                g->player.setVelY(g->player.getVelY() + 10);
             g->player.setJump(true);
             g->setCol(false);
             //std::cout<<"jump colision = false"<<std::endl;
