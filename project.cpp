@@ -223,6 +223,8 @@ void init_opengl(void)
     glEnable(GL_TEXTURE_2D);
     //initialize_fonts();
     simonImage = ppm6GetImage("./Images/simon-belmont-2.ppm");
+    //Set pixel red colors to black 
+    setColorBlack(simonImage);
     //creating openGl texture elements
     glGenTextures(1, &simonTexture);
     glGenTextures(1, &silhouetteTexture);
