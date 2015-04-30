@@ -26,6 +26,7 @@
 //#include "Mechanics/Game.h"
 #include "Mechanics/Physics.h"
 #include "Animation/Animation.h"
+#include "UI/UI.h"
 #include <ctype.h>
 #include "FMOD/fmod.h"
 
