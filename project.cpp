@@ -101,7 +101,7 @@ void init_sounds(void);
 void init(Game *g);
 void physics(Game *game);
 void render(Game *game);
-void UIRender(Game *game, XEvent *e);
+void UIRender(Game *game);
 //-----------------------------------------------------------------------------
 
 int main(void)
@@ -135,7 +135,7 @@ int main(void)
             physicsCountdown -= physicsRate;
         }
         render(&game);
-        UIRender(&game, &e);
+        UIRender(&game);
         game.setRun(false);
         glXSwapBuffers(dpy, win);
 
@@ -598,8 +598,8 @@ ghoul = ghoul->next;
 
 */
 }
-void UIRender(Game *g, XEvent *e){
+void UIRender(Game *g){
 
-renderUI(g,xres,yres);
+renderHealth(g,xres,yres);
 
 }
