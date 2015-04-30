@@ -458,7 +458,7 @@ void render(Game *g)
     glPopMatrix();
 */
     glPopMatrix();
-
+	renderUI(g);
     /*  
     //whip
     if (g->getHit()){		
