@@ -2,6 +2,7 @@
 #ifndef _CHARACTER_H_
 #define _CHARACTER_H_
 
+#define MAX_HEALTH 15
 typedef float Vec[2];
 //Base class for all characters in game. From player to NPCs to enemies.
 
@@ -15,9 +16,21 @@ class Character
                 float height;       //height of character.
                 float width;        //width of character.
                 float color[3];     //color scheme of character. RGB.
+				int health;
 
         public:
-                
+				void setHealth(int h) { health = h; }             
+				int getHealth() { return health; }  
+				void decHealth() { 
+					if (health > 0) {
+						health--;
+					} 
+				}             
+				void incHealth() {
+					if (health < MAX_HEALTH){ 
+						health++;
+					}
+				}             
                 void setPos(float x, float y) { 
                         pos[0] = x; 
                         pos[1] = y; 

@@ -18,7 +18,8 @@ class Players : public Character {
                         width = 15.0f;
                         height = 35.0f;
                         forward=true;
-                        vel[0] = 0;
+                        setHealth(15);
+						vel[0] = 0;
                         vel[1] = 0;
                         color[0] = 189.0/255.0;
                         color[1] = 255.0/255.0;
