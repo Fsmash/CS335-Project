@@ -2,16 +2,18 @@
 #ifndef _UI_H_
 #define _UI_H_
 
-void renderUI(Game *g);
+void renderUI(Game *g, int xr, int yr);
 
-void renderUI(Game *g)
+void renderUI(Game *g, int xr, int yr)
 {
+
+
 	int width = 5;
 	int height = 10;
 	int x = 20;
-	int xres = 1250;
-	int y = 210;
-	int yres = 900;
+	int xres = xr;
+	int y = 20;
+	int yres = yr;
 	int spacing = 15;
 
 	for (int i = 0; i < g->player.getHealth(); i++) {

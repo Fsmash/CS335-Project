@@ -101,6 +101,7 @@ void init_sounds(void);
 void init(Game *g);
 void physics(Game *game);
 void render(Game *game);
+void UIRender(Game *game, XEvent *e);
 //-----------------------------------------------------------------------------
 
 int main(void)
@@ -117,6 +118,7 @@ int main(void)
     int done=0;
     game.setRun(true);
     while (!done) {
+        XEvent e;
         while (XPending(dpy)) {
             XEvent e;
             XNextEvent(dpy, &e);
@@ -133,6 +135,7 @@ int main(void)
             physicsCountdown -= physicsRate;
         }
         render(&game);
+        UIRender(&game, &e);
         game.setRun(false);
         glXSwapBuffers(dpy, win);
 
@@ -270,6 +273,8 @@ void check_resize(XEvent *e)
     if (xce.width != xres || xce.height != yres) {
         //Window size did change.
         reshape_window(xce.width, xce.height);
+		xres = xce.width;
+		yres = xce.height;
     }
 }
 
@@ -467,7 +472,6 @@ void render(Game *g)
     glPopMatrix();
 */
     glPopMatrix();
-	renderUI(g);
     /*  
     //whip
     if (g->getHit()){		
@@ -593,4 +597,9 @@ ghoul = ghoul->next;
 }
 
 */
+}
+void UIRender(Game *g, XEvent *e){
+
+renderUI(g,xres,yres);
+
 }
