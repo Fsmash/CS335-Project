@@ -16,7 +16,7 @@ class Players : public Character {
                 
                 Players() {
                         width = 15.0f;
-                        height = 35.0f;
+                        height = 50.0f;
                         forward=true;
                         setHealth(15);
 						setScore(0);
