@@ -233,6 +233,7 @@ void init_opengl(void)
     simonImage = ppm6GetImage("./Images/simon-belmont-2.ppm");
     blockImage = ppm6GetImage("./Images/block1.ppm");
     uiImage = ppm6GetImage("./Images/ui.ppm");
+    backImage = ppm6GetImage("./Images/background.ppm");
     //Set pixel red colors to black 
     setColorBlack(simonImage);
     //creating openGl texture elements
@@ -306,6 +307,18 @@ void init_opengl(void)
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
     glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, blockImage->data);
+
+ 
+    glGenTextures(1, &backTexture);
+    w = backImage->width;
+    h = backImage->height;
+
+    glBindTexture(GL_TEXTURE_2D, backTexture);
+
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, backImage->data);
+
 }
 
 void check_resize(XEvent *e)
@@ -447,7 +460,8 @@ void physics(Game *g)
 void render(Game *g)
 {	
     glClear(GL_COLOR_BUFFER_BIT);
-
+    
+    backGround();
 
     Block *bh = g->blockHead;
     int blockWidth = bh->getWidth();

@@ -8,11 +8,14 @@
 //Loading sprite images
 Ppmimage *simonImage=NULL;
 Ppmimage *blockImage=NULL;
+Ppmimage *backImage=NULL;
 GLuint simonTexture;
 GLuint silhouetteTexture;
 GLuint blockTexture;
+GLuint backTexture;
 int show_simon = 0;
 int silhouette = 1;
+int xWid = 1250; int yHeight = 900;
 
 
 void setColorBlack(Ppmimage *img) 
@@ -95,7 +98,26 @@ void blockSprite(Block *b) {
     
     glEnd();
     glPopMatrix();
-} 
+}
+
+void backGround() {
+    
+    glPushMatrix();
+    //float wid = b->getWidth();
+   
+    // glTranslatef(b->getCenterX(), b->getCenterY(), 0.0f);
+    
+    glBindTexture(GL_TEXTURE_2D, backTexture);
+    glBegin(GL_QUADS);
+    
+    glTexCoord2f(0.0, 0.0); glVertex2f(-xWid, -xWid);
+    glTexCoord2f(0.0, 1.0); glVertex2f(-xWid, xWid);
+    glTexCoord2f(1.0, 1.0); glVertex2f(xWid, xWid);
+    glTexCoord2f(1.0, 0.0); glVertex2f(xWid, -xWid);
+    
+    glEnd();
+    glPopMatrix();
+}
 
 
 
