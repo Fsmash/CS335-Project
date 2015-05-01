@@ -134,7 +134,7 @@ void applyKey(Game *g, int *keys) {
             g->player.setVelX(g->player.getVelX() + 4);
     }
 
-    if (keys[XK_Up]) {
+    if (keys[XK_space]) {
         if (!g->player.getJump()) {
             if(dash)
                 g->player.setVelY(g->player.getVelY() + 18);
