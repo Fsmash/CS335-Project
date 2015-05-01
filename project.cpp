@@ -86,7 +86,8 @@ void timeCopy(struct timespec *dest, struct timespec *source) {
 
 //Global variables
 int xres=1250, yres=900;
-int keys[65536];
+#define KEY_MAX 65536
+int keys[KEY_MAX];
 //-----------------------------------------------------------------------------
 
 //function prototypes
@@ -409,7 +410,9 @@ int check_keys(XEvent *e)
     int key = XLookupKeysym(&e->xkey, 0);
     //Log("key: %i\n", key);
     if (e->type == KeyRelease) {
-        keys[key]=0;
+        // hopefully fix segfaults
+        if(key >= 0 && key <= KEY_MAX)
+            keys[key]=0;
         if (key == XK_Shift_L || key == XK_Shift_R) {
             // release shift (unused?) and dash
             shift=0;
@@ -418,7 +421,9 @@ int check_keys(XEvent *e)
         return 0;
     }
     else if (e->type == KeyPress) {
-        keys[key]=1;
+        // hopefully fix segfaults
+        if(key >= 0 && key <= KEY_MAX)
+            keys[key]=1;
         if (key == XK_Shift_L || key == XK_Shift_R) {
             // set shift (unused?) and dash
             shift=1;
