@@ -246,7 +246,7 @@ void init_opengl(void)
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
     glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0,
-            GL_RGB, GL_UNSIGNED_BYTE, simonImage->data);
+    GL_RGB, GL_UNSIGNED_BYTE, simonImage->data);
     //-------------------------------------------------------------------
     //
     //silhouette
@@ -261,6 +261,41 @@ void init_opengl(void)
             GL_RGBA, GL_UNSIGNED_BYTE, silhouetteData);
     delete [] silhouetteData;
     //-------------------------------------------------------------------
+	
+
+	//init UI
+	//Ppmimage *uiImage=NULL;
+    //GLuint uiTexture;
+    uiImage = ppm6GetImage("./Images/ui.ppm");
+    //Set pixel red colors to black 
+    setColorBlack(uiImage);
+    //creating openGl texture elements
+    glGenTextures(1, &uiTexture);
+    glGenTextures(1, &uiTexture);
+    //-------------------------------------------------------------------
+    w = uiImage->width;
+    h = uiImage->height;
+    //
+    glBindTexture(GL_TEXTURE_2D, uiTexture);
+    //
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0,
+            GL_RGB, GL_UNSIGNED_BYTE, uiImage->data);
+    //-------------------------------------------------------------------
+    //displays sprite to screen 
+    //
+    glBindTexture(GL_TEXTURE_2D, uiTexture);
+    //
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    unsigned char *uiData = buildAlphaData(uiImage);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,
+            GL_RGBA, GL_UNSIGNED_BYTE, uiData);
+    delete [] uiData;
+    //-------------------------------------------------------------------
+
+
 }
 
 void check_resize(XEvent *e)
