@@ -102,6 +102,7 @@ void init(Game *g);
 void physics(Game *game);
 void render(Game *game);
 void UIRender(Game *game);
+
 //-----------------------------------------------------------------------------
 
 int main(void)
@@ -223,13 +224,15 @@ void init_opengl(void)
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_FOG);
     glDisable(GL_CULL_FACE);
-    //
     //Clear the screen to black
     glClearColor(0.0, 0.0, 0.0, 1.0);
     //Do this to allow fonts
     glEnable(GL_TEXTURE_2D);
     //initialize_fonts();
+    //init images
     simonImage = ppm6GetImage("./Images/simon-belmont-2.ppm");
+    blockImage = ppm6GetImage("./Images/block1.ppm");
+    uiImage = ppm6GetImage("./Images/ui.ppm");
     //Set pixel red colors to black 
     setColorBlack(simonImage);
     //creating openGl texture elements
@@ -266,7 +269,6 @@ void init_opengl(void)
 	//init UI
 	//Ppmimage *uiImage=NULL;
     //GLuint uiTexture;
-    uiImage = ppm6GetImage("./Images/ui.ppm");
     //Set pixel red colors to black 
     setColorBlack(uiImage);
     //creating openGl texture elements
@@ -294,8 +296,16 @@ void init_opengl(void)
             GL_RGBA, GL_UNSIGNED_BYTE, uiData);
     delete [] uiData;
     //-------------------------------------------------------------------
+   
+    glGenTextures(1, &blockTexture);
+    w = blockImage->width;
+    h = blockImage->height;
 
+    glBindTexture(GL_TEXTURE_2D, blockTexture);
 
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, blockImage->data);
 }
 
 void check_resize(XEvent *e)
@@ -316,18 +326,6 @@ void check_resize(XEvent *e)
 void init(Game *g) {
     memset(keys, 0, 65536);
     //set some initial parameters
-    //g->player.setPos(100.0f, 350.0f);     
-    //g->initWhip();          
-    //g->whip.setCenterX(g->player.getPosX());         
-    //g->whip.setCenterY(g->player.getPosY() + 200);         
-    //g->initFloor();       
-    //create ghouls
-    //g->createGhoul(); 
-    //ghoul2
-    //g->createGhoul(); 
-    //create obstacles
-    //g->initObstacles();
-
     int row = 20;
     int col = 60;
     char **map;
@@ -353,6 +351,7 @@ void init(Game *g) {
                     b->setAdjLeft(true);
                
                 b->setCenter(((2*40*c)+40), (900-(2*40*r)-40));  
+                //blockSprite(b);
             }
         }
     }
@@ -458,6 +457,7 @@ void render(Game *g)
 
     glPushMatrix();
     float dist = -g->player.getPosX()+xres/2;
+
     if (dist < 0 || dist > 3960) 
         glTranslatef(-g->player.getPosX()+xres/2,-g->player.getPosY()+200, 0.0f);
 
@@ -467,7 +467,8 @@ void render(Game *g)
 
     for (int i = 0; i < g->nBlocks; i++) {
 
-        glPushMatrix();
+        blockSprite(bh);
+        /*glPushMatrix();
         blockX = bh->getCenterX();
         blockY = bh->getCenterY();
         glColor3f(83.0/255.0,52.0/255.0,178.0/255.0);
@@ -482,7 +483,7 @@ void render(Game *g)
         glBegin(GL_POINTS);
         glVertex2f(0.0f, 0.0f);
         glEnd();
-        glPopMatrix();
+        glPopMatrix();*/
         bh = bh->next;
     }
     spriteAnimation(g, keys);
@@ -633,6 +634,7 @@ ghoul = ghoul->next;
 
 */
 }
+
 void UIRender(Game *g){
 
 renderHealth(g,xres,yres);

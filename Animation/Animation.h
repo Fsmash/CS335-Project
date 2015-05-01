@@ -7,8 +7,10 @@
 
 //Loading sprite images
 Ppmimage *simonImage=NULL;
+Ppmimage *blockImage=NULL;
 GLuint simonTexture;
 GLuint silhouetteTexture;
+GLuint blockTexture;
 int show_simon = 0;
 int silhouette = 1;
 
@@ -76,6 +78,26 @@ unsigned char *buildAlphaData(Ppmimage *img)
 }
 //--------------------------------------------------------------------------
 //Function to organize sprite mapping and animations
+void blockSprite(Block *b) {
+    
+    glPushMatrix();
+    float wid = b->getWidth();
+   
+    glTranslatef(b->getCenterX(), b->getCenterY(), 0.0f);
+    
+    glBindTexture(GL_TEXTURE_2D, blockTexture);
+    glBegin(GL_QUADS);
+    
+    glTexCoord2f(0.0, 0.0); glVertex2f(-wid, -wid);
+    glTexCoord2f(0.0, 1.0); glVertex2f(-wid, wid);
+    glTexCoord2f(1.0, 1.0); glVertex2f(wid, wid);
+    glTexCoord2f(1.0, 0.0); glVertex2f(wid, -wid);
+    
+    glEnd();
+    glPopMatrix();
+} 
+
+
 
 void spriteAnimation(Game *g, int *keys) 
 {

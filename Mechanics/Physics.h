@@ -102,7 +102,7 @@ void playerCollision(Game *g) {
                 && (playerY < (blockY + blockH ))
                 && (playerY > (blockY - blockH ))
                 && !(block->getAdjRight())) {
-            cout << "block x " << blockX << " y " << blockY << "pushing your shit" << endl;
+            //cout << "block x " << blockX << " y " << blockY << "pushing your shit" << endl;
             g->player.setPosX(blockX + blockW + playerW);
         }
 
