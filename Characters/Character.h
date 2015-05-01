@@ -17,7 +17,8 @@ class Character
                 float width;        //width of character.
                 float color[3];     //color scheme of character. RGB.
 				int health;
-
+				int score;
+	
         public:
 				void setHealth(int h) { health = h; }             
 				int getHealth() { return health; }  
@@ -35,6 +36,11 @@ class Character
                         pos[0] = x; 
                         pos[1] = y; 
                 }
+                void setScore(int iScore) { score = iScore; }
+                
+				void addToScore(int iAdd) { score = score + iAdd; }
+                
+				int getScore() { return score; }
 
                 void setPosX(float x) { pos[0] = x; }
 

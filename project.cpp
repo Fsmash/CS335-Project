@@ -636,5 +636,7 @@ ghoul = ghoul->next;
 void UIRender(Game *g){
 
 renderHealth(g,xres,yres);
+renderScore(g,xres,yres,0);
+renderItemSlot(g,xres,yres);
 
 }

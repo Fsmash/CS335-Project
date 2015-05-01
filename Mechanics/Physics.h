@@ -142,6 +142,7 @@ void applyKey(Game *g, int *keys) {
                 g->player.setVelY(g->player.getVelY() + 10);
             g->player.setJump(true);
             g->setCol(false);
+			
             //std::cout<<"jump colision = false"<<std::endl;
         }
     }

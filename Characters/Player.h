@@ -19,6 +19,7 @@ class Players : public Character {
                         height = 35.0f;
                         forward=true;
                         setHealth(15);
+						setScore(0);
 						vel[0] = 0;
                         vel[1] = 0;
                         color[0] = 189.0/255.0;
@@ -29,6 +30,7 @@ class Players : public Character {
                 void setJump(bool iJump) { jump = iJump; }
                 
                 bool getJump() { return jump; }
+                
 
 };
 
