@@ -357,7 +357,7 @@ void init(Game *g) {
     }
 
     // change this if you want, this was here for testing
-    fmod_createsound("./Sounds/Shape Shifters_Coldly Calculated Design 8-bit.flac",BGM);
+    fmod_createsound("./Sounds/bgm2.flac",BGM);
     // setting to loop for now (it is bgm atm)
     fmod_setmode(BGM,FMOD_LOOP_NORMAL);
     // play sound; bool does nothing atm
