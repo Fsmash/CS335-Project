@@ -15,7 +15,7 @@ GLuint blockTexture;
 GLuint backTexture;
 int show_simon = 0;
 int silhouette = 1;
-int xWid = 1250; int yHeight = 900;
+int xWid = 900;
 
 
 void setColorBlack(Ppmimage *img) 
@@ -100,12 +100,11 @@ void blockSprite(Block *b) {
     glPopMatrix();
 }
 
-void backGround() {
+void backGround(Game *g) {
     
     glPushMatrix();
-    //float wid = b->getWidth();
    
-    // glTranslatef(b->getCenterX(), b->getCenterY(), 0.0f);
+    glTranslatef(g->player.getPosX(), g->player.getPosY(), 0.0f);
     
     glBindTexture(GL_TEXTURE_2D, backTexture);
     glBegin(GL_QUADS);
@@ -155,7 +154,7 @@ void spriteAnimation(Game *g, int *keys)
         glTexCoord2f(0.055f, 0.0f); glVertex2f(-wid, wid);
         glTexCoord2f(0.0f, 0.0f); glVertex2f(wid, wid);
         glTexCoord2f(0.0f, 0.055f); glVertex2f(wid, -wid);
-    } else if (keys[XK_Down]) {
+    } else if (keys[XK_Down] || keys['s']) {
         if(g->player.getFwd()) {
             glTexCoord2f(0.055f, 0.055f); glVertex2f(-wid, -wid);
             glTexCoord2f(0.055f, 0.0f); glVertex2f(-wid, wid);

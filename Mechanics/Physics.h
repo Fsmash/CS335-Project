@@ -116,25 +116,25 @@ void applyKey(Game *g, int *keys) {
     //        g->player.setPosX(g->player.getPosX() + (float)x);
     //    }
     //    else if (g->player.getPosX() > 0 + (float)x) {
-    //        g->player.setPosX(g->player.getPosX() - (float)x);
+    //        g->player.setPosX(g->player.getPosX`() - (float)x);
     //    }
 
 
     //check keys pressed now`
-    if (keys[XK_Left]) {
+    if (keys[XK_Left] || keys['a']) {
         if(dash)
             g->player.setVelX(g->player.getVelX() - 12);
         else
             g->player.setVelX(g->player.getVelX() - 4);
     }
-    if (keys[XK_Right]) {
+    if (keys[XK_Right] || keys['d']) {
         if(dash)
             g->player.setVelX(g->player.getVelX() + 12);
         else
             g->player.setVelX(g->player.getVelX() + 4);
     }
 
-    if (keys[XK_space]) {
+    if (keys[XK_space] || keys['w'] || keys[XK_Up]) {
         if (!g->player.getJump()) {
             if(dash)
                 g->player.setVelY(g->player.getVelY() + 18);
