@@ -15,7 +15,9 @@ GLuint blockTexture;
 GLuint backTexture;
 int show_simon = 0;
 int silhouette = 1;
-int xWid = 900;
+int xWid = 750;
+float xRes = 1250;
+float yRes = 900;
 //Setup time functions
 double frameCountdown= 0.0;
 //-----------------------------------------------------------------------------
@@ -102,11 +104,11 @@ void blockSprite(Block *b) {
     glPopMatrix();
 }
 
-void backGround(Game *g) {
+void backGround() {
     
     glPushMatrix();
    
-    glTranslatef(g->player.getPosX(), g->player.getPosY(), 0.0f);
+    glTranslatef((xRes / 2), (yRes / 2) - 200, 0.0f);
     
     glBindTexture(GL_TEXTURE_2D, backTexture);
     glBegin(GL_QUADS);

@@ -466,7 +466,7 @@ void render(Game *g)
 {	
     glClear(GL_COLOR_BUFFER_BIT);
     
-    backGround(g);
+    backGround();
 
     Block *bh = g->blockHead;
     int blockWidth = bh->getWidth();
