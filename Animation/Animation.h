@@ -221,15 +221,15 @@ void spriteAnimation(Game *g, int *keys, const double frameRate, double timeSpan
         }   
     } else if (keys[XK_Down]) {
         if(g->player.getFwd()) {
-            glTexCoord2f(0.055f, 0.055f); glVertex2f(-wid, -wid);
-            glTexCoord2f(0.055f, 0.0f); glVertex2f(-wid, wid);
+            glTexCoord2f(0.071f, 0.055f); glVertex2f(-wid, -wid);
+            glTexCoord2f(0.071f, 0.0f); glVertex2f(-wid, wid);
             glTexCoord2f(0.11f, 0.0f); glVertex2f(wid, wid);
             glTexCoord2f(0.11f, 0.055f); glVertex2f(wid, -wid);
         } else {
             glTexCoord2f(0.11f, 0.055f); glVertex2f(-wid, -wid);
             glTexCoord2f(0.11f, 0.0f); glVertex2f(-wid, wid);
-            glTexCoord2f(0.055f, 0.0f); glVertex2f(wid, wid);
-            glTexCoord2f(0.055f, 0.055f); glVertex2f(wid, -wid);
+            glTexCoord2f(0.071f, 0.0f); glVertex2f(wid, wid);
+            glTexCoord2f(0.071f, 0.055f); glVertex2f(wid, -wid);
         }
     } else {
         if(g->player.getFwd()) {
