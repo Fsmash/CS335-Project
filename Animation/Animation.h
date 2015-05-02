@@ -94,8 +94,8 @@ void blockSprite(Block *b) {
     glBegin(GL_QUADS);
     
     glTexCoord2f(0.0, 0.0); glVertex2f(-wid, -wid);
-    glTexCoord2f(0.0, 1.0); glVertex2f(-wid, wid);
-    glTexCoord2f(1.0, 1.0); glVertex2f(wid, wid);
+    glTexCoord2f(0.0, 0.95); glVertex2f(-wid, wid);
+    glTexCoord2f(1.0, 0.95); glVertex2f(wid, wid);
     glTexCoord2f(1.0, 0.0); glVertex2f(wid, -wid);
     
     glEnd();
