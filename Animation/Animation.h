@@ -16,8 +16,10 @@ GLuint backTexture;
 int show_simon = 0;
 int silhouette = 1;
 int xWid = 900;
-
-
+//Setup time functions
+double frameCountdown= 0.0;
+//-----------------------------------------------------------------------------
+///Check each pixel and change red pixels to black
 void setColorBlack(Ppmimage *img) 
 {
     int a, b , c;
@@ -120,9 +122,10 @@ void backGround(Game *g) {
 
 
 
-void spriteAnimation(Game *g, int *keys) 
+void spriteAnimation(Game *g, int *keys, const double frameRate, double timeSpan) 
 {
-//float playerW;
+    frameCountdown += timeSpan;
+    //float playerW;
     //float playerH;
     float wid = 60.0f;
 
@@ -144,17 +147,27 @@ void spriteAnimation(Game *g, int *keys)
     glBegin(GL_QUADS);
     //playerW = g->player.getWidth();
     //playerH = g->player.getHeight();
-    if (keys[XK_Right]) {
-        glTexCoord2f(0.0f, 0.055f); glVertex2f(-wid, -wid);
-        glTexCoord2f(0.0f, 0.0f); glVertex2f(-wid, wid);
-        glTexCoord2f(0.055f, 0.0f); glVertex2f(wid, wid);
-        glTexCoord2f(0.055f, 0.055f); glVertex2f(wid, -wid);
+if (keys[XK_Right]) {
+        if(frameCountdown < (30*frameRate)) {
+            glTexCoord2f(0.0f, 0.055f); glVertex2f(-wid, -wid);
+            glTexCoord2f(0.0f, 0.0f); glVertex2f(-wid, wid);
+            glTexCoord2f(0.055f, 0.0f); glVertex2f(wid, wid);
+            glTexCoord2f(0.055f, 0.055f); glVertex2f(wid, -wid);
+        } else if(frameCountdown >= (30*frameRate)) {
+            glTexCoord2f(0.055f, 0.055f); glVertex2f(-wid, -wid);
+            glTexCoord2f(0.055f, 0.0f); glVertex2f(-wid, wid);
+            glTexCoord2f(0.0f, 0.0f); glVertex2f(wid, wid);
+            glTexCoord2f(0.0f, 0.055f); glVertex2f(wid, -wid);
+            if(frameCountdown >= (60*frameRate)) {
+                frameCountdown -= (60*frameRate);
+            }
+        }
     } else if(keys[XK_Left]) {
         glTexCoord2f(0.055f, 0.055f); glVertex2f(-wid, -wid);
         glTexCoord2f(0.055f, 0.0f); glVertex2f(-wid, wid);
         glTexCoord2f(0.0f, 0.0f); glVertex2f(wid, wid);
         glTexCoord2f(0.0f, 0.055f); glVertex2f(wid, -wid);
-    } else if (keys[XK_Down] || keys['s']) {
+    } else if (keys[XK_Down]) {
         if(g->player.getFwd()) {
             glTexCoord2f(0.055f, 0.055f); glVertex2f(-wid, -wid);
             glTexCoord2f(0.055f, 0.0f); glVertex2f(-wid, wid);
@@ -178,7 +191,7 @@ void spriteAnimation(Game *g, int *keys)
             glTexCoord2f(0.0f, 0.0f); glVertex2f(wid, wid);
             glTexCoord2f(0.0f, 0.055f); glVertex2f(wid, -wid);
         }
-    }
+    }      
     glEnd();
     glPopMatrix();
     glBindTexture(GL_TEXTURE_2D, 0);

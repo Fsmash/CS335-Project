@@ -505,7 +505,7 @@ void render(Game *g)
         glPopMatrix();*/
         bh = bh->next;
     }
-    spriteAnimation(g, keys);
+    spriteAnimation(g, keys, physicsRate, timeSpan);
     /* float playerW;
        float playerH;
 
