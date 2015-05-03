@@ -34,13 +34,13 @@ class Block : public Shape {
        
         void setAdjRight(bool adj) { adjRight = adj; }
 
-        bool getAdjRight() { return adjRight; }
+        //bool getAdjRight() { return adjRight; }
 
-        void setAdjLeft(bool adj) { adjLeft = adj; }
+        //void setAdjLeft(bool adj) { adjLeft = adj; }
 
-        bool getAdjLeft() { return adjLeft; }
+        //bool getAdjLeft() { return adjLeft; }
 
-        void setBreakable(bool iBreak) { breakable = iBreak; }
+        //void setBreakable(bool iBreak) { breakable = iBreak; }
 
         bool getBreakable() { return breakable; }
 

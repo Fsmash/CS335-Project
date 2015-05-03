@@ -347,37 +347,37 @@ void init(Game *g) {
     map = g->getLevel(lvl,row,col);
     Block *b;
 	Items *it;
-   // Ghouls *gs;
+    Ghouls *gs;
 
     for (int r = 0; r < row; r++){
         for(int c = 0; c < col; c++){
             if (!isspace(map[r][c])){
-				if (map[r][c] == 'S') 
-					g->player.setPos(((2*40*c)+40), (900-(2*40*r-35))); 
-				if (map[r][c] == 'h'){
-					it = g->createItem();
-					it->setCenter(((2*40*c)+40), (yres-(2*40*r)-35)); 
-					continue;
-				}
-			/*if (map[r][c] == 'G') {
-				gs = g->createGhoul();
-				gs->setPos(((2*40*c)+40), (900-(2*40*r-35))); 
-			}*/
-			
-				b = g->createBlock();
-				b->setCenter(((2*40*c)+40), (900-(2*40*r)-40));  
-			
-				if (map[r][c] == 'C') 
-					b->setClimb(true); 
+                if (map[r][c] == 'S') 
+                    g->player.setPos(((2*40*c)+40), (900-(2*40*r-35))); 
+                if (map[r][c] == 'h'){
+                    it = g->createItem();
+                    it->setCenter(((2*40*c)+40), (yres-(2*40*r)-35)); 
+                    continue;
+                }
+                if (map[r][c] == 'G') {
+                    gs = g->createGhoul();
+                    gs->setPos(((2*40*c)+40), (900-(2*40*r-35))); 
+                }
 
-	//			if (c != (col - 1) && !isspace(map[r][c+1])) 
-	//				b->setAdjRight(true);
+                b = g->createBlock();
+                b->setCenter(((2*40*c)+40), (900-(2*40*r)-40));  
 
-	//			if (c != 0 && !isspace(map[r][c-1])) 
-	//				b->setAdjLeft(true);
-			}
-		}
-        
+                if (map[r][c] == 'C') 
+                    b->setClimb(true); 
+
+                //			if (c != (col - 1) && !isspace(map[r][c+1])) 
+                //				b->setAdjRight(true);
+
+                //			if (c != 0 && !isspace(map[r][c-1])) 
+                //				b->setAdjLeft(true);
+            }
+        }
+
     }
 
     // change this if you want, this was here for testing

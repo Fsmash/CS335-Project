@@ -91,7 +91,7 @@ void characterCollision(Game *g) {
                     && (playerX < blockX)) 
                 && (playerY < (blockY + blockH))
                 && (playerY > (blockY - blockH))
-                && !(block->getAdjLeft())) {
+               /* && !(block->getAdjLeft())*/) {
             g->player.setPosX(blockX - blockW - playerW);
         }
 
@@ -100,7 +100,7 @@ void characterCollision(Game *g) {
                 && (playerX > blockX) 
                 && (playerY < (blockY + blockH ))
                 && (playerY > (blockY - blockH ))
-                && !(block->getAdjRight())) {
+               /* && !(block->getAdjRight()) */) {
             //cout << "block x " << blockX << " y " << blockY << "pushing your shit" << endl;
             g->player.setPosX(blockX + blockW + playerW);
         }

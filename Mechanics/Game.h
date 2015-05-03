@@ -45,6 +45,12 @@ class Game {
             nGhouls = 0;
         }
 
+        ~Game() {
+        delete blockHead;
+        delete ghoulHead;
+        delete itemHead;
+        }
+
         bool getHit() { return hit; }
 
         void setHit(bool iHit) { hit = iHit; }
