@@ -25,7 +25,7 @@ class Block : public Shape {
         Block *prev;
 
         ~Block() {
-        if (next != NULL) delete next;
+	        if (next != NULL) delete next;
         }
 
         void setClimb(bool iClimb) { climb = iClimb; }

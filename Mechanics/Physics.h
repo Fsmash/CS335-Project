@@ -57,9 +57,8 @@ void characterCollision(Game *g) {
     float blockW;
 
     Block *block = g->blockHead;
-
-    for (int i = 0; i < g->nBlocks; i++) {
-
+    //for (int i = 0; i < g->nBlocks-10; i++) {
+	while(block){
         //cout << "peanut butter ice cream diahrrea" << endl;
         blockY = block->getCenterY();
         blockX = block->getCenterX();
@@ -105,7 +104,6 @@ void characterCollision(Game *g) {
             //cout << "block x " << blockX << " y " << blockY << "pushing your shit" << endl;
             g->player.setPosX(blockX + blockW + playerW);
         }
-
         block = block->next;
     }
 }

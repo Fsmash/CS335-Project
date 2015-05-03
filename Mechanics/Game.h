@@ -7,6 +7,7 @@
 #include "../Characters/Ghoul.h"
 #include "../Objects/Whip.h"
 #include "../Objects/Block.h"
+#include "../Objects/Items.h"
 
 using namespace std;
 
@@ -31,13 +32,17 @@ class Game {
 
         Players player;         //the player, could possibly be a pointer if we want to implement multiplayer
 
+		Items *itemHead;
+		int nItems;
+
         Game() {
             col = false;        //collision flag, fixes multiple jumps
             firstrun = true;    //first time running game
             firstrender =true;  //first time rendering
             ghoulHead = NULL;   //initialize ghoul head of list to NULL
+			itemHead =NULL;
             blockHead = NULL;   //initialize block head of list to NULL
-            nGhouls = 0;        //initialize number of ghouls to zero
+            nGhouls = 0;
         }
 
         bool getHit() { return hit; }
@@ -100,6 +105,16 @@ class Game {
             blockHead = bh;
             nBlocks++;
             return bh;
+        }
+        Items *createItem() {
+            
+            Items *it = new Items;
+            it->next = itemHead;
+            if (itemHead != NULL)
+                itemHead->prev = it;
+            itemHead = it;
+            nItems++;
+            return it;
         }
 
         char **getLevel(char *lvl, int rows, int cols) {

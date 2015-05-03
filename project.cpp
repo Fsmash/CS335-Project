@@ -23,7 +23,7 @@
 #include <GL/glu.h>
 #include "Images/ppm.h"
 //#include "log.h"
-//#include "Mechanics/Game.h"
+#include "Mechanics/Game.h"
 #include "Mechanics/Physics.h"
 #include "Animation/Animation.h"
 #include "UI/UI.h"
@@ -340,39 +340,44 @@ void check_resize(XEvent *e)
 void init(Game *g) {
     memset(keys, 0, 65536);
     //set some initial parameters
-    int row = 20;
-    int col = 50;
+    int row = 13;
+    int col = 40;
     char **map;
     char *lvl = "Levels/lvl1.txt";
     map = g->getLevel(lvl,row,col);
     Block *b;
+	Items *it;
    // Ghouls *gs;
 
     for (int r = 0; r < row; r++){
         for(int c = 0; c < col; c++){
             if (!isspace(map[r][c])){
-                if (map[r][c] == 'S') 
-                    g->player.setPos(((2*40*c)+40), (900-(2*40*r-35))); 
+				if (map[r][c] == 'S') 
+					g->player.setPos(((2*40*c)+40), (900-(2*40*r-35))); 
+				if (map[r][c] == 'h'){
+					it = g->createItem();
+					it->setCenter(((2*40*c)+40), (yres-(2*40*r)-35)); 
+					continue;
+				}
+			/*if (map[r][c] == 'G') {
+				gs = g->createGhoul();
+				gs->setPos(((2*40*c)+40), (900-(2*40*r-35))); 
+			}*/
+			
+				b = g->createBlock();
+				b->setCenter(((2*40*c)+40), (900-(2*40*r)-40));  
+			
+				if (map[r][c] == 'C') 
+					b->setClimb(true); 
 
-                /*if (map[r][c] == 'G') {
-                    gs = g->createGhoul();
-                    gs->setPos(((2*40*c)+40), (900-(2*40*r-35))); 
-                }*/
+	//			if (c != (col - 1) && !isspace(map[r][c+1])) 
+	//				b->setAdjRight(true);
 
-                b = g->createBlock();
-
-                if (map[r][c] == 'C') 
-                    b->setClimb(true); 
-
-                if (c != (col - 1) && !isspace(map[r][c+1])) 
-                    b->setAdjRight(true);
-
-                if (c != 0 && !isspace(map[r][c-1])) 
-                    b->setAdjLeft(true);
-
-                b->setCenter(((2*40*c)+40), (900-(2*40*r)-40));  
-            }
-        }
+	//			if (c != 0 && !isspace(map[r][c-1])) 
+	//				b->setAdjLeft(true);
+			}
+		}
+        
     }
 
     // change this if you want, this was here for testing
@@ -470,8 +475,8 @@ void render(Game *g)
     glClear(GL_COLOR_BUFFER_BIT);
     
     backGround();
-
     Block *bh = g->blockHead;
+    Items *it = g->itemHead;
     Ghouls *gh = g->ghoulHead;
     int blockWidth = bh->getWidth();
     int blockHeight = bh->getHeight();
@@ -492,10 +497,28 @@ void render(Game *g)
         glTranslatef(0.0,-g->player.getPosY()+200, 0.0f);
     }
 
-    for (int i = 0; i < g->nBlocks; i++) {
+    while(bh) {
         blockSprite(bh);
         bh = bh->next;
     }
+	while(it) {
+		glPushMatrix();
+		glColor3f(1.0f, 0.0f, 0.0f);
+		glTranslatef(it->getCenterX(), it->getCenterY(), 0.0f);
+		glBegin(GL_QUADS);
+
+		int ghoulW = 10;
+		int ghoulH = 10;
+
+		glVertex2f(-ghoulW, -ghoulH);
+		glVertex2f(-ghoulW, ghoulH);
+		glVertex2f(ghoulW, ghoulH);
+		glVertex2f(ghoulW, -ghoulH);
+		glEnd();
+		glPopMatrix();
+        it = it->next;
+	}
+		
 
     /*for (int i = 0; i < g->nGhouls; i++) {
         //ghoulSprite(gh);
@@ -523,7 +546,6 @@ void render(Game *g)
     glVertex2f(ghoulW, ghoulH);
     glVertex2f(ghoulW, -ghoulH);
     glEnd();
-    glColor3f(1.0f, 0.0f, 0.0f);
     glBegin(GL_QUADS);
     glVertex2f(-10.0f, 40.0f);
     glVertex2f(-10.0f,65.00f);
