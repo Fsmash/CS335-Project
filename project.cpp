@@ -340,8 +340,8 @@ void check_resize(XEvent *e)
 void init(Game *g) {
     memset(keys, 0, 65536);
     //set some initial parameters
-    int row = 13;
-    int col = 40;
+    int row = 20;
+    int col = 70;
     char **map;
     char *lvl = "Levels/lvl1.txt";
     map = g->getLevel(lvl,row,col);
@@ -490,12 +490,12 @@ void render(Game *g)
     if (dist < 0) 
         glTranslatef(-g->player.getPosX()+xres/2,-g->player.getPosY()+200, 0.0f);
 
-    else if (dist > 4000)
+	else if (dist > 70*80)//columns * blockwidth
         glTranslatef(g->player.getPosX()+xres/2,-g->player.getPosY()-200, 0.0f);
-   
+    
     else {
         glTranslatef(0.0,-g->player.getPosY()+200, 0.0f);
-    }
+   }
 
     while(bh) {
         blockSprite(bh);

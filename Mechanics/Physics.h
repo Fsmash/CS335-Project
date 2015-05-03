@@ -34,9 +34,9 @@ void playerForces(Game *g) {
     g->player.applyGrav(gravity);
 
     //apply velocity in both directions
-    if (g->player.getVelX() + g->player.getPosX() < 4000){
-        g->player.setPosX(g->player.getPosX() + g->player.getVelX());	
-    }
+    //if (g->player.getVelX() + g->player.getPosX() < 70*80){ //columns * blockwidth
+    g->player.setPosX(g->player.getPosX() + g->player.getVelX());	
+    //}
 
     g->player.setPosY(g->player.getPosY() + g->player.getVelY());
 
@@ -93,6 +93,7 @@ void characterCollision(Game *g) {
                 && (playerY > (blockY - blockH))
                 && !(block->getAdjLeft())) {
             g->player.setPosX(blockX - blockW - playerW);
+			cout<<"here"<<endl;
         }
 
         //right side
