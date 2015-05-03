@@ -147,7 +147,7 @@ void spriteAnimation(Game *g, int *keys, const double frameRate, double timeSpan
     //playerW = g->player.getWidth();
     //playerH = g->player.getHeight();
     //walk right
-    if (keys[XK_Right]) {
+    if (keys[XK_Right] || keys['d']) {
         frameCountdown += timeSpan;
         if(frameCountdown < (10*frameRate)) {
             glTexCoord2f(0.180f, 0.055f); glVertex2f(-wid, -wid);
@@ -183,7 +183,7 @@ void spriteAnimation(Game *g, int *keys, const double frameRate, double timeSpan
                 frameCountdown = 0.0;
             }
         }
-    } else if(keys[XK_Left]) {
+    } else if(keys[XK_Left] || keys['a']) {
         frameCountdown += timeSpan;
         if(frameCountdown < (10*frameRate)) {
             glTexCoord2f(0.218f, 0.055f); glVertex2f(-wid, -wid);
@@ -219,7 +219,7 @@ void spriteAnimation(Game *g, int *keys, const double frameRate, double timeSpan
                 frameCountdown = 0.0;
             }
         }   
-    } else if (keys[XK_Down]) {
+    } else if (keys[XK_Down] || keys['s']) {
         if(g->player.getFwd()) {
             glTexCoord2f(0.071f, 0.055f); glVertex2f(-wid, -wid);
             glTexCoord2f(0.071f, 0.0f); glVertex2f(-wid, wid);
