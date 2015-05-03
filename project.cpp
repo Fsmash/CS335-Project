@@ -341,18 +341,24 @@ void init(Game *g) {
     memset(keys, 0, 65536);
     //set some initial parameters
     int row = 20;
-    int col = 60;
+    int col = 50;
     char **map;
     char *lvl = "Levels/lvl1.txt";
     map = g->getLevel(lvl,row,col);
     Block *b;
+   // Ghouls *gs;
 
     for (int r = 0; r < row; r++){
         for(int c = 0; c < col; c++){
             if (!isspace(map[r][c])){
                 if (map[r][c] == 'S') 
                     g->player.setPos(((2*40*c)+40), (900-(2*40*r-35))); 
-                
+
+                /*if (map[r][c] == 'G') {
+                    gs = g->createGhoul();
+                    gs->setPos(((2*40*c)+40), (900-(2*40*r-35))); 
+                }*/
+
                 b = g->createBlock();
 
                 if (map[r][c] == 'C') 
@@ -360,12 +366,11 @@ void init(Game *g) {
 
                 if (c != (col - 1) && !isspace(map[r][c+1])) 
                     b->setAdjRight(true);
-                
+
                 if (c != 0 && !isspace(map[r][c-1])) 
                     b->setAdjLeft(true);
-               
+
                 b->setCenter(((2*40*c)+40), (900-(2*40*r)-40));  
-                //blockSprite(b);
             }
         }
     }
@@ -453,13 +458,11 @@ int check_keys(XEvent *e)
 
 void physics(Game *g)
 {	
-
     playerFwd(g);	
     playerJump(g);
     playerForces(g);
-    playerCollision(g);
+    characterCollision(g);
     applyKey(g, keys);
-
 }
 
 void render(Game *g)
@@ -469,131 +472,39 @@ void render(Game *g)
     backGround();
 
     Block *bh = g->blockHead;
+    Ghouls *gh = g->ghoulHead;
     int blockWidth = bh->getWidth();
     int blockHeight = bh->getHeight();
     float blockX;
     float blockY;
 
     glPushMatrix();
+    
     float dist = -g->player.getPosX()+xres/2;
 
-    if (dist < 0 || dist > 3960) 
+    if (dist < 0) 
         glTranslatef(-g->player.getPosX()+xres/2,-g->player.getPosY()+200, 0.0f);
 
+    else if (dist > 4000)
+        glTranslatef(g->player.getPosX()+xres/2,-g->player.getPosY()-200, 0.0f);
+   
     else {
         glTranslatef(0.0,-g->player.getPosY()+200, 0.0f);
     }
 
     for (int i = 0; i < g->nBlocks; i++) {
-
         blockSprite(bh);
-        /*glPushMatrix();
-        blockX = bh->getCenterX();
-        blockY = bh->getCenterY();
-        glColor3f(83.0/255.0,52.0/255.0,178.0/255.0);
-        glTranslatef(blockX, blockY, 0.0f);
-        glBegin(GL_QUADS);
-        glVertex2f(-blockWidth, -blockHeight);
-        glVertex2f(-blockWidth, blockHeight);
-        glVertex2f(blockWidth, blockHeight);
-        glVertex2f(blockWidth, -blockHeight);
-        glEnd();
-        glColor3f(1.0f, 0.0f, 0.0f);
-        glBegin(GL_POINTS);
-        glVertex2f(0.0f, 0.0f);
-        glEnd();
-        glPopMatrix();*/
         bh = bh->next;
     }
+
+    /*for (int i = 0; i < g->nGhouls; i++) {
+        //ghoulSprite(gh);
+        gh = gh->next;
+    }*/
+
     spriteAnimation(g, keys, physicsRate, timeSpan);
-    /* float playerW;
-       float playerH;
-
-    //Draw the player
-    glColor3fv(g->player.getColor());
-    glPushMatrix();
-    playerW = g->player.getWidth();
-    playerH = g->player.getHeight();
-
-    glTranslatef(g->player.getPosX(), g->player.getPosY(), 0.0f);
-
-    glBegin(GL_QUADS);
-    glVertex2f(-playerW, -playerH);
-    glVertex2f(-playerW, playerH);
-    glVertex2f(playerW, playerH);
-    glVertex2f(playerW, -playerH);
-    glEnd();
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glPopMatrix();
-*/
     glPopMatrix();
     /*  
-    //whip
-    if (g->getHit()){		
-    glColor3fv(g->obstacle[0].getColor());
-    glPushMatrix();
-    glTranslatef(g->whip.getCenterX(), g->whip.getCenterY() + 20, 0);
-    glBegin(GL_QUADS);
-    float whipW = g->whip.getWidth();
-    float whipH = g->whip.getHeight();
-    glVertex2f(-whipW, -whipH);
-    glVertex2f(-whipW, whipH);
-    glVertex2f(whipW, whipH);
-    glVertex2f(whipW, -whipH);
-    glEnd();
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glBegin(GL_POINTS);
-    glVertex2f(0.0f, 0.0f);
-    glEnd();
-    glPopMatrix();
-    }	
-
-    glColor3fv(g->floor.getColor());
-    glPushMatrix();
-    glTranslatef(g->floor.getCenterX(), g->floor.getCenterY(), 0);
-    glBegin(GL_QUADS);
-    float floorW = g->floor.getWidth();
-    float floorH = g->floor.getHeight();
-
-    glVertex2f(-floorW, -floorH);
-    glVertex2f(-floorW, floorH);
-    glVertex2f(floorW, floorH);
-    glVertex2f(floorW, -floorH);
-    glEnd();
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glBegin(GL_POINTS);
-    glVertex2f(0.0f, 0.0f);
-    glEnd();
-    glPopMatrix();
-    */
-
-
-    /*else{
-      glColor3fv(g->player.getColor());
-      glPushMatrix();
-    //std::cout<<"[RENDER]g->player.pos[0]"<<g->player.pos[0]<<"g->player.pos[1]"<<g->player.pos[1]<<std::endl;
-    glTranslatef(g->player.getPosX(), g->player.getPosY(), 0.0f);
-    glBegin(GL_QUADS);
-
-    playerW = g->player.getWidth();
-    playerH = g->player.getHeight();
-
-    glVertex2f(-playerW, -playerH);
-    glVertex2f(-playerW, playerH);
-    glVertex2f(playerW, playerH);
-    glVertex2f(playerW, -playerH);
-    glEnd();
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glBegin(GL_QUADS);
-    glVertex2f(-20.0f, 40.0f);
-    glVertex2f(-20.0f,65.00f);
-    glVertex2f( 10.0f, 65.0f);
-    glVertex2f( 10.0f, 40.0f);
-    glEnd();
-    glPopMatrix();
-
-    }
-
     float ghoulW;
     float ghoulH;
     Ghouls *ghoul = g->ghoulHead;

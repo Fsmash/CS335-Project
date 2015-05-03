@@ -15,16 +15,13 @@ class Players : public Character {
                 bool jump;
                 
                 Players() {
-                        width = 15.0f;
+                        width = 30.0f;
                         height = 50.0f;
                         forward=true;
                         setHealth(15);
 						setScore(0);
 						vel[0] = 0;
                         vel[1] = 0;
-                        color[0] = 189.0/255.0;
-                        color[1] = 255.0/255.0;
-                        color[2] = 235.0/255.0;	
                 }
 
                 void setJump(bool iJump) { jump = iJump; }

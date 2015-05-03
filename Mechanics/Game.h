@@ -22,11 +22,7 @@ class Game {
         bool col;               //collision with platform or floor, true of false
 
     public:
-
-        //Shape obstacle[4];    //platforms, change to pointer and dynamically allocate memory later
-        Shape floor;            //floor of the scene
-        Whip whip;              //whip weapon, try to move to player class later
-
+        
         Block *blockHead;       //pointer to begninning of Block linked list
         int nBlocks;            //the number of blocks in the list
 
@@ -55,31 +51,6 @@ class Game {
         bool getRun() { return firstrun; }
 
         void setRun(bool iRun) { firstrun = iRun; }
-
-        /*
-           void updateWhip() {
-           float xPos = player.getPosX();
-           float yPos = player.getPosY();
-           whip.setCenterX(xPos);
-           whip.setCenterY(yPos);
-           }
-
-           void initWhip() {     //inititailize whip object, will try to replace, move, or both later
-           hit = false;                        //hit detection false
-           whip.setWidth(0.0f);                  //width zero because it has yet to extend
-           whip.setHeight(5.0f);                 //height about 5, could be thinner
-           whip.setColor(80.0/255.0, 127.0/255.0, 40.0/255.0);
-           whip.setTipX(0);                      //tip that causes hit
-           updateWhip();
-           }
-
-           void initFloor() {      //initialize floor
-           floor.setCenterY(0.0f);
-           floor.setCenterX(100.0f);
-           floor.setWidth(1200.0f);    //why was this here? - https://github.com/SilentReaper/CS335-Project.git
-           floor.setHeight(100.0f); 
-           floor.setColor(127.0/255.0, 60.0/255.0, 56.0/255.0);
-        }*/
 
         Ghouls *createGhoul() {
             Ghouls *gh = new Ghouls;
@@ -121,7 +92,7 @@ class Game {
         }
 
         Block *createBlock() {
-
+            
             Block *bh = new Block;
             bh->next = blockHead;
             if (blockHead != NULL)
@@ -144,11 +115,9 @@ class Game {
                 char ch = inFile.get();
                 while (ch != '\n') {
                     array[r][c] = ch;
-                    //cout << (char)array[r][c];
                     c++;
                     ch = inFile.get();
                 }
-                //cout << endl;
             }
 
             return array;    

@@ -8,11 +8,7 @@ using namespace std;
 
 class Block : public Shape {
 
-    public:
-
-        Block *next;
-
-        Block *prev;
+    private:
 
         bool breakable;
         
@@ -21,6 +17,16 @@ class Block : public Shape {
         bool adjRight;
 
         bool adjLeft;
+
+    public:
+
+        Block *next;
+
+        Block *prev;
+
+        ~Block() {
+        if (next != NULL) delete next;
+        }
 
         void setClimb(bool iClimb) { climb = iClimb; }
 

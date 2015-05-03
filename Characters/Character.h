@@ -15,8 +15,7 @@ class Character
                 bool forward;       //true if moving forward, x velocity left or right. false if no velocity left or right.
                 float height;       //height of character.
                 float width;        //width of character.
-                float color[3];     //color scheme of character. RGB.
-				int health;
+                int health;
 				int score;
 	
         public:
@@ -69,14 +68,6 @@ class Character
                 
                 void setFwd(bool iFwd) { forward = iFwd; } 
                 
-                float * getColor() { return color; }
-             
-                void setColor(float R, float G, float B) {
-                        color[0] = R;
-                        color[1] = G;
-                        color[2] = B;
-                }
-
                 void changeSize(float iHeight, float iWidth) {
                         height = iHeight;
                         width = iWidth;            

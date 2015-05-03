@@ -11,7 +11,6 @@ class Shape {
                 float width;
                 float height;
                 float radius;
-                float color[3];
                 Vect center;
 
         public:
@@ -37,13 +36,6 @@ class Shape {
 
                 void setCenterY(float y) { center.y = y; }
                 
-                float * getColor() { return color; }
-                
-                void setColor(float R, float G, float B) { 
-                        color[0] = R; 
-                        color[1] = G; 
-                        color[2] = B; 
-                }
 };
 
 #endif //_OBJECTS_H_

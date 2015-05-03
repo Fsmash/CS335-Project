@@ -21,11 +21,11 @@ class Ghouls : public Character {
                         width = 20;
                         height = 70;
                         vel[0] = 2;
-                        color[0] = 67.0/255.0;
-                        color[1] = 200.0/255.0;
-                        color[2] = 156.0/255.0;
                 }
 
+                ~Ghouls() {
+                if (next != NULL) delete next;
+                }
 };
 
 #endif //_GAME_H_
