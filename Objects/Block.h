@@ -14,10 +14,6 @@ class Block : public Shape {
         
         bool climb;
 
-        bool adjRight;
-
-        bool adjLeft;
-
     public:
 
         Block *next;
@@ -32,15 +28,7 @@ class Block : public Shape {
 
         bool getClimb() { return climb; }
        
-        void setAdjRight(bool adj) { adjRight = adj; }
-
-        //bool getAdjRight() { return adjRight; }
-
-        //void setAdjLeft(bool adj) { adjLeft = adj; }
-
-        //bool getAdjLeft() { return adjLeft; }
-
-        //void setBreakable(bool iBreak) { breakable = iBreak; }
+        void setBreakable(bool iBreak) { breakable = iBreak; }
 
         bool getBreakable() { return breakable; }
 
@@ -48,7 +36,7 @@ class Block : public Shape {
             next = prev = NULL;
             width = height = 40;
             climb = false;
-            adjRight = adjLeft = false;
+            breakable = false;
         }
 };
 

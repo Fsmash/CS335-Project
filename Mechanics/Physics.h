@@ -34,9 +34,9 @@ void playerForces(Game *g) {
     g->player.applyGrav(gravity);
 
     //apply velocity in both directions
-    if (g->player.getVelX() + g->player.getPosX() < 4000){
-        g->player.setPosX(g->player.getPosX() + g->player.getVelX());	
-    }
+    //if (g->player.getVelX() + g->player.getPosX() < 70*80){ //columns * blockwidth
+    g->player.setPosX(g->player.getPosX() + g->player.getVelX());	
+    //}
 
     g->player.setPosY(g->player.getPosY() + g->player.getVelY());
 
@@ -57,9 +57,8 @@ void characterCollision(Game *g) {
     float blockW;
 
     Block *block = g->blockHead;
-    //for (int i = 0; i < g->nBlocks-10; i++) {
-	while(block){
-        //cout << "peanut butter ice cream diahrrea" << endl;
+	
+    while(block){
         blockY = block->getCenterY();
         blockX = block->getCenterX();
         blockH = block->getHeight();
@@ -90,8 +89,7 @@ void characterCollision(Game *g) {
         if ( (playerX > (blockX - blockW - playerW) 
                     && (playerX < blockX)) 
                 && (playerY < (blockY + blockH))
-                && (playerY > (blockY - blockH))
-               /* && !(block->getAdjLeft())*/) {
+                && (playerY > (blockY - blockH))) {
             g->player.setPosX(blockX - blockW - playerW);
         }
 
@@ -99,9 +97,7 @@ void characterCollision(Game *g) {
         if ( playerX < (blockX + blockW + playerW) 
                 && (playerX > blockX) 
                 && (playerY < (blockY + blockH ))
-                && (playerY > (blockY - blockH ))
-               /* && !(block->getAdjRight()) */) {
-            //cout << "block x " << blockX << " y " << blockY << "pushing your shit" << endl;
+                && (playerY > (blockY - blockH ))) {
             g->player.setPosX(blockX + blockW + playerW);
         }
         block = block->next;
