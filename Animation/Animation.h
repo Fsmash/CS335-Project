@@ -127,11 +127,11 @@ void spriteAnimation(Game *g, int *keys, const double frameRate, double timeSpan
     //float playerW;
     //float playerH;
     float wid = 60.0f;
-
+    float walkFrame = 8.0*frameRate;
     //Draw the player
     //glColor3fv(g->player.getColor());
     glPushMatrix();
-    //std::cout<<"g->player.pos[0]"<<g->player.getPosX()<<"g->player.pos[1]"<<g->player.getPosY()<<std::endl;
+    //std::cout<<"g->player.pos[0]"<<g->player.getPosX()<<"g->player.pos[1]"<<g-       >player.getPosY()<<std::endl;
 
     glTranslatef(g->player.getPosX(), g->player.getPosY(), 0.0f);
     if (!silhouette) {
@@ -148,78 +148,109 @@ void spriteAnimation(Game *g, int *keys, const double frameRate, double timeSpan
     //playerH = g->player.getHeight();
     //walk right
     if (keys[XK_Right] || keys['d']) {
+        //walk right 
         frameCountdown += timeSpan;
-        if(frameCountdown < (10*frameRate)) {
+        if(keys[XK_Shift_L]) {
+            walkFrame = 6.0*frameRate;
+        }
+        if(frameCountdown < (walkFrame)) {
             glTexCoord2f(0.180f, 0.055f); glVertex2f(-wid, -wid);
             glTexCoord2f(0.180f, 0.0f); glVertex2f(-wid, wid);
             glTexCoord2f(0.218f, 0.0f); glVertex2f(wid, wid);
             glTexCoord2f(0.218f, 0.055f); glVertex2f(wid, -wid);
-        } else if(frameCountdown > (10*frameRate) && frameCountdown < (20*frameRate)) {
+        } else if(frameCountdown > walkFrame && frameCountdown < 2.0*walkFrame) {
             glTexCoord2f(0.216f, 0.055f); glVertex2f(-wid, -wid);
             glTexCoord2f(0.216f, 0.0f); glVertex2f(-wid, wid);
             glTexCoord2f(0.257f, 0.0f); glVertex2f(wid, wid);
             glTexCoord2f(0.257f, 0.055f); glVertex2f(wid, -wid);
-        } else if(frameCountdown > (20*frameRate) && frameCountdown < (30*frameRate)) {
+        } else if(frameCountdown > 2.0*walkFrame && frameCountdown < 3.0*walkFrame) {
             glTexCoord2f(0.257f, 0.055f); glVertex2f(-wid, -wid);
             glTexCoord2f(0.257f, 0.0f); glVertex2f(-wid, wid);
             glTexCoord2f(0.294f, 0.0f); glVertex2f(wid, wid);
             glTexCoord2f(0.294f, 0.055f); glVertex2f(wid, -wid);
-        } else if(frameCountdown > (30*frameRate) && frameCountdown < (40*frameRate)) {
+        } else if(frameCountdown > 3.0*walkFrame && frameCountdown < 4.0*walkFrame) {
             glTexCoord2f(0.294f, 0.055f); glVertex2f(-wid, -wid);
             glTexCoord2f(0.294f, 0.0f); glVertex2f(-wid, wid);
             glTexCoord2f(0.329f, 0.0f); glVertex2f(wid, wid);
             glTexCoord2f(0.329f, 0.055f); glVertex2f(wid, -wid);
-        } else if(frameCountdown > (40*frameRate) && frameCountdown < (50*frameRate)) {
+        } else if(frameCountdown > 4.0*walkFrame && frameCountdown < 5.0*walkFrame) {
             glTexCoord2f(0.329f, 0.055f); glVertex2f(-wid, -wid);
             glTexCoord2f(0.329f, 0.0f); glVertex2f(-wid, wid);
             glTexCoord2f(0.359f, 0.0f); glVertex2f(wid, wid);
             glTexCoord2f(0.359f, 0.055f); glVertex2f(wid, -wid);
-        } else if(frameCountdown >= (50*frameRate)) {            
+        } else if(frameCountdown >= 5.0*walkFrame) {
             glTexCoord2f(0.359f, 0.055f); glVertex2f(-wid, -wid);
             glTexCoord2f(0.359f, 0.0f); glVertex2f(-wid, wid);
             glTexCoord2f(0.393f, 0.0f); glVertex2f(wid, wid);
             glTexCoord2f(0.393f, 0.055f); glVertex2f(wid, -wid);
-            if(frameCountdown >= (60*frameRate)) {
+            if(frameCountdown >= 6.0*walkFrame) {
                 frameCountdown = 0.0;
             }
         }
     } else if(keys[XK_Left] || keys['a']) {
+        //walk left
         frameCountdown += timeSpan;
-        if(frameCountdown < (10*frameRate)) {
+        if(keys[XK_Shift_L]) {
+            walkFrame = 6.0*frameRate;
+        }
+        if(frameCountdown < (walkFrame)) {
             glTexCoord2f(0.218f, 0.055f); glVertex2f(-wid, -wid);
             glTexCoord2f(0.218f, 0.0f); glVertex2f(-wid, wid);
             glTexCoord2f(0.180f, 0.0f); glVertex2f(wid, wid);
             glTexCoord2f(0.180f, 0.055f); glVertex2f(wid, -wid);
-        } else if(frameCountdown > (10*frameRate) && frameCountdown < (20*frameRate)) {
+        } else if(frameCountdown > walkFrame && frameCountdown < 2.0*walkFrame) {
             glTexCoord2f(0.257f, 0.055f); glVertex2f(-wid, -wid);
             glTexCoord2f(0.257f, 0.0f); glVertex2f(-wid, wid);
             glTexCoord2f(0.216f, 0.0f); glVertex2f(wid, wid);
             glTexCoord2f(0.216f, 0.055f); glVertex2f(wid, -wid);
-        } else if(frameCountdown > (20*frameRate) && frameCountdown < (30*frameRate)) {
+        } else if(frameCountdown > 2.0*walkFrame && frameCountdown < 3.0*walkFrame) {
             glTexCoord2f(0.294f, 0.055f); glVertex2f(-wid, -wid);
             glTexCoord2f(0.294f, 0.0f); glVertex2f(-wid, wid);
             glTexCoord2f(0.257f, 0.0f); glVertex2f(wid, wid);
             glTexCoord2f(0.257f, 0.055f); glVertex2f(wid, -wid);
-        } else if(frameCountdown > (30*frameRate) && frameCountdown < (40*frameRate)) {
-            glTexCoord2f(0.329f, 0.055f); glVertex2f(-wid, -wid);
+        } else if(frameCountdown > 3.0*walkFrame && frameCountdown < 4.0*walkFrame) {
+glTexCoord2f(0.329f, 0.055f); glVertex2f(-wid, -wid);
             glTexCoord2f(0.329f, 0.0f); glVertex2f(-wid, wid);
             glTexCoord2f(0.294f, 0.0f); glVertex2f(wid, wid);
             glTexCoord2f(0.294f, 0.055f); glVertex2f(wid, -wid);
-        } else if(frameCountdown > (40*frameRate) && frameCountdown < (50*frameRate)) {
+        } else if(frameCountdown > 4.0*walkFrame && frameCountdown < 5.0*walkFrame) {
             glTexCoord2f(0.359f, 0.055f); glVertex2f(-wid, -wid);
             glTexCoord2f(0.359f, 0.0f); glVertex2f(-wid, wid);
             glTexCoord2f(0.329f, 0.0f); glVertex2f(wid, wid);
             glTexCoord2f(0.329f, 0.055f); glVertex2f(wid, -wid);
-        } else if(frameCountdown >= (50*frameRate)) {            
+        } else if(frameCountdown >= 5.0*walkFrame) {
             glTexCoord2f(0.393f, 0.055f); glVertex2f(-wid, -wid);
             glTexCoord2f(0.393f, 0.0f); glVertex2f(-wid, wid);
             glTexCoord2f(0.359f, 0.0f); glVertex2f(wid, wid);
             glTexCoord2f(0.359f, 0.055f); glVertex2f(wid, -wid);
-            if(frameCountdown >= (60*frameRate)) {
+            if(frameCountdown >= 6.0*walkFrame) {
                 frameCountdown = 0.0;
             }
-        }   
+        }
+    } else if (keys['l']) {
+        //standing forward whip attack
+        frameCountdown += timeSpan;
+        if(frameCountdown < (walkFrame)) {
+            glTexCoord2f(0.0396f, 0.5927f); glVertex2f(-wid, -wid);
+            glTexCoord2f(0.0396f, 0.538f); glVertex2f(-wid, wid);
+            glTexCoord2f(0.0826f, 0.538f); glVertex2f(wid, wid);
+            glTexCoord2f(0.0826f, 0.5927f); glVertex2f(wid, -wid);
+        } else if(frameCountdown > walkFrame && frameCountdown < 2.0*walkFrame) {
+            glTexCoord2f(0.0826f, 0.5868f); glVertex2f(-wid, -wid);
+            glTexCoord2f(0.0826f, 0.5232f); glVertex2f(-wid, wid);
+            glTexCoord2f(0.1604f, 0.5232f); glVertex2f(wid, wid);
+            glTexCoord2f(0.1604f, 0.5868f); glVertex2f(wid, -wid);
+        } else if(frameCountdown >= 2.0*walkFrame) {
+            glTexCoord2f(0.1604f, 0.5844f); glVertex2f(-wid, -wid);
+            glTexCoord2f(0.1604f, 0.538f); glVertex2f(-wid, wid);
+            glTexCoord2f(0.2567f, 0.538f); glVertex2f(wid, wid);
+            glTexCoord2f(0.2567f, 0.5844f); glVertex2f(wid, -wid);
+            if(frameCountdown >= 3.0*walkFrame) {
+                frameCountdown = 0.0;
+            }
+        }
     } else if (keys[XK_Down] || keys['s']) {
+        //crouching stance
         if(g->player.getFwd()) {
             glTexCoord2f(0.071f, 0.055f); glVertex2f(-wid, -wid);
             glTexCoord2f(0.071f, 0.0f); glVertex2f(-wid, wid);
@@ -232,6 +263,7 @@ void spriteAnimation(Game *g, int *keys, const double frameRate, double timeSpan
             glTexCoord2f(0.071f, 0.055f); glVertex2f(wid, -wid);
         }
     } else {
+        //idle stance
         if(g->player.getFwd()) {
             glTexCoord2f(0.016f, 0.055f); glVertex2f(-wid, -wid);
             glTexCoord2f(0.016f, 0.0f); glVertex2f(-wid, wid);
@@ -243,7 +275,7 @@ void spriteAnimation(Game *g, int *keys, const double frameRate, double timeSpan
             glTexCoord2f(0.016f, 0.0f); glVertex2f(wid, wid);
             glTexCoord2f(0.016f, 0.055f); glVertex2f(wid, -wid);
         }
-    }      
+    }
     glEnd();
     glPopMatrix();
     glBindTexture(GL_TEXTURE_2D, 0);
